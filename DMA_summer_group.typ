@@ -1,9 +1,10 @@
 #import "./typst_packages/lecture.typ": *
+#import "./typst_packages/math_alphabet.typ": *
 
 
 #show: doc => conf(
   "群論",
-  "陽明交代應數系營隊",
+  "陽明交大應數系營隊",
   doc)
 
 
@@ -20,8 +21,10 @@
 
 #definition[
   $angle.l G , * angle.r$是一個集合 $G$ 與一個二元運算 $* : G times G |-> G$，滿足以下條件：
-  
-  
+  #set enum(numbering: n => [$scr.G_#n$:])
+  + 對於所有的$a,b,c in G$， $ (a*b)*c = a*(b*c) space textb("結合律") $ 
+  + 存在一個元素 $e in G$，使得對於所有的 $a in G$， $ a*e = e*a = a space textb("單位元") $
+  + 對於每一個 $a in G$，存在一個元素 $a^(-1) in G$，使得 $ a*a^(-1) = a^(-1)*a = e space textb("反元素") $
 ]
 #example[
   整數集合 $ZZ$ 與加法運算組成一個群。
