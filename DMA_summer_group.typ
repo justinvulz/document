@@ -118,7 +118,13 @@
 == 不動點 (Fixed point)、穩定子群 (stabilizers subgroup)、軌道 (Orbits)
 #let Stab = math.op("Stab")
 #definition[
-  
+  讓$X$是一個$G negspace textb("=set")$，讓$x in X$，$g in G$。我們定義；
+  $
+    Stab_(G)(x) = {g in G | g x = x} \
+    X^g = {x in X | g x = x}
+  $
+  $Stab_(G)(x)$稱為$x$的*穩定子群*，$X^g$稱為$g$的*不動點*。
+
 ]
 
 == 伯恩賽德引理 (Burnside’s Lemma)
