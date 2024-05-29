@@ -2,8 +2,23 @@
 
 
 
-// #show par: set block(spacing: 0.65em)
-// #show figure: set block(spacing: 1em)
+// #show par: set block(spacing: 0.01em)
+// #show figure: set block(spacing: 0em)
+// #show par: p => [
+//   // #v(-0.5em)
+//   #block(fill: aqua)[
+//     #p
+//   ]
+//   // #v(-0.5em)
+//   sdds
+// ]
+// #show figure: f => [
+//   // #block(stroke: aqua,outset: 1pt)[
+//   //   #f
+//   // ]
+//   23dfsaaaaaaaaa
+// ]
+
 
 #show: doc => conf(
   "群論",
@@ -46,7 +61,7 @@
 #remark[有時候我們會省略二元運算$*$，以$G$表示一個群。]
 
 #definition[
-  讓$G$是一個群，定義$|G|$是$G$的元素個數，稱為$G$的*order*。
+  讓$G$是一個群，定義$abs(G)$是$G$的元素個數，稱為$G$的*order*。
 ]
 #definition[
   一個群$G$如果滿足交換率i.e. 對於所有的$a,b in G$，$ a*b = b*a $，則稱$G$是一個*交換群*(Abelian groups)。
@@ -97,17 +112,19 @@
 
 = 作用群(Group Action)
 
+#let gset = $G negspace textb("-set")$
+
 #definition[
   一個群$G$對一個集合$A$的*作用*是一個映射$* : G times A -> A$，滿足以下條件：
   #set enum(numbering: al("1."))
   + 對於所有$a in A quad e a = a$
   + 對於所有$a in A$ 和 $g,h in G$，$(g h)a = g(h a)$
 
-  在這個情況下，我們稱$A$是一個$G negspace textb("-set")$
+  在這個情況下，我們稱$A$是一個#gset。
 ]
 
 #theorem[
-  讓$X$是一個$G negspace textb("-set")$。如果$g x_1 = g x_2$，那$x_1 = x_2$
+  讓$X$是一個#gset。如果$g x_1 = g x_2$，那$x_1 = x_2$
 ]
 #proof[
    假設 $g x_1 = g x_2$，那麼 $g^(−1)g x_1 = g^(−1) g x_2$，所以 $e x_1 = e x_2$，所以 $x_1 = x_2$。
@@ -118,15 +135,42 @@
 == 不動點 (Fixed point)、穩定子群 (stabilizers subgroup)、軌道 (Orbits)
 #let Stab = math.op("Stab")
 #definition[
-  讓$X$是一個$G negspace textb("=set")$，讓$x in X$，$g in G$。我們定義；
+  讓$X$是一個#gset，讓$x in X$，$g in G$。我們定義；
   $
-    Stab_(G)(x) = {g in G | g x = x} \
+    Stab_G (x) = {g in G | g x = x} \
     X^g = {x in X | g x = x}
   $
-  $Stab_(G)(x)$稱為$x$的*穩定子群*，$X^g$稱為$g$的*不動點*。
-
+  $Stab_G (x)$稱為$x$的*穩定子群*，$X^g$稱為$g$的*不動點*。
+]
+#theorem[
+  讓$X$是一個#gset，我們定義一個在$X$上的關係$tilde.op$，對於所有的$x,y in X$，$x tilde.op y$當且僅當存在$g in G$，使得$g x = y$。這個關係是一個等價關係。
+] <relation>
+#proof[
+  \ *自反性*：對於所有的$x in X$，$x tilde.op x$，因為$e x = x$。
+  \ *對稱性*：如果$x tilde.op y$，那麼存在$g in G$，使得$g x = y$，所以$g^(-1) y = x$，所以$y tilde.op x$。
+  \ *傳遞性*：如果$x tilde.op y$且$y tilde.op z$，那麼存在$g,h in G$，使得$g x = y$且$h y = z$，所以$h g x = z$，所以$x tilde.op z$。
+] 
+#definition[
+  讓$X$是一個#gset，每一個在 @relation 下的等價類稱為一個*軌道*。如果$x in X$，包含$x$的分割是$x$的軌道，記作$G_x$。
+]
+#theorem[
+  讓 $X$ 是一個 #gset，$x in X$，那麼 $x$ 的軌道 $G_x = {g x mid(|) g in G}$。
 ]
 
+
+#theorem([軌道-穩定子定理 (Orbit-Stabilizer Theorem)])[
+  讓$G$是一個有限群，讓 $X$ 是一個 #gset，$x in X$，那麼 $abs(G) = abs(G_x) abs(G x)$。
+]
+
+#proof[
+  定義$f:G -> G_x$，$f(g) = g x$。我們證明每一個在$G_x$裡的元素都被打到$abs(Stab_G (x))$這麼多次。\
+  給定一個$y in G_x$，那麼存在$h in G$使得$y = h x$。\
+  如果$g in Stab_G (x)$，那$g x = x$，所以
+  $
+    f(h g) = h g x = h x = y
+  $
+  如果$g in.not Stab_G (x)$
+]
 == 伯恩賽德引理 (Burnside’s Lemma)
 
 == 著色多項式
