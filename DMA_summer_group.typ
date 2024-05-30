@@ -19,6 +19,8 @@
 //   23dfsaaaaaaaaa
 // ]
 
+#show par: set block(spacing: 0.9em)
+#show math.equation: set block(spacing: 0.9em)
 
 #show: doc => conf(
   "群論",
@@ -160,7 +162,7 @@
 
 #theorem([軌道-穩定子定理 (Orbit-Stabilizer Theorem)])[
   讓$G$是一個有限群，讓 $X$ 是一個 #gset，$x in X$，那麼 $abs(G) = abs(G_x) abs(G x)$。
-]
+] <orbit-stabilizer>
 
 #proof[
   定義$f:G -> G_x$，$f(g) = g x$。我們證明每一個在$G_x$裡的元素都被打到$abs(Stab_G (x))$這麼多次。\
@@ -169,8 +171,44 @@
   $
     f(h g) = h g x = h x = y
   $
-  如果$g in.not Stab_G (x)$
+  如果$g in.not Stab_G (x)$，那麼$g x != x$，所以
+  $
+    f(h g) = h g x != h x = y
+  $
+  所以$y$被打到那麼多次$abs(Stab_G (x))$，所以$abs(G) = abs(G_x) abs(Stab_G (x))$。
 ]
 == 伯恩賽德引理 (Burnside’s Lemma)
+#theorem([*伯恩賽德引理*])[
+  讓$G$是一個有限群，讓$X$是一個#gset。讓$r$是$X$的軌道數，那麼
+  $
+    r dot abs(G) = sum_(g in G) abs(X^g)
+  $
+]
+#proof[
+  #set math.equation(numbering: "(1)")
+  我們考慮數組$(g,x)$，其中$g x = x$。假設這樣的樹組有$N$個。
+  對於每一個$g in G$，我們計算$(g,x)$的數量，這個數量是$abs(X^g)$。所以
+  $
+    N = sum_(g in G) abs(X^g)
+  $
+  另一方面，對於每一個$x in X$，我們計算$(g,x)$的數量，這個數量是$abs(Stab_G (x))$。所以
+  $
+    N = sum_(x in X) abs(Stab_G (x))
+  $
+  根據 @orbit-stabilizer[*軌道穩定子定理* Thm]，$abs(Stab_G (x))abs(G_x) = abs(G)$，所以，
+  $
+    N = sum_(x in X) abs(Stab_G (x)) = sum_(x in X) abs(G) / abs(G_x) = abs(G) sum_(x in X) 1 / abs(G_x)
+  $ 
+  對於在相同軌道的元素，$abs(G_x)$是相同的。讓$cal(O)$是一個軌道，我們有
+  $
+    sum_(x in cal(O)) 1 / abs(G_x) = sum_(x in cal(O)) 1 / abs(cal(O)) = 1
+  $ 
+  用 *(3)* 代入 *(2)*，我們得到
+  $
+    N = abs(G) dot (textr("軌道的數量")) = abs(G) dot r
+  $ 
+  因此， 結合 *(1)* 和 *(4)*，我們得到
+  $ r dot abs(G) = sum_(g in G) abs(X^g) $
+]
 
 == 著色多項式
