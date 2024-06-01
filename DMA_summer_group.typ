@@ -1,4 +1,5 @@
 #import "./typst_packages/lecture.typ": *
+#import "@preview/cetz:0.2.2"
 
 
 
@@ -246,3 +247,67 @@ $
   r = 1/abs(G) sum_(g in G) abs(X^g) =  1/abs(G) sum_(g in G) n^(m_g)
 $
 
+#example[
+  #let mg = $m_g$
+  我們考慮有$n$個顏色，對一個正四邊形上色，我們要求在對稱性下有幾種不同的著色方法。
+  我們讓$G = D_4$是正四邊形的對稱群，$X$是所有著色的結果($abs(X) = n^4$)，所以我們要求$X$在$G$下有幾個軌道。根據前的討論，我們知道$abs(G) = 8$，然後我們計算不動點的個數：
+  - 單位變換 $mg = 4$
+  - $2$個$mg = 1$的旋轉($90 degree, 270 degree$)，e.x. $g = (1,2,3,4)$   
+  - $1$個$mg = 2$的旋轉($180 degree$)，e.x. $g = (1,2)(3,4)$  
+  - $2$個$mg = 3$的鏡射(對角線的鏡射)，e.x. $g = (1)(3)(2,4)$ 
+  - $2$個$mg = 2$的鏡射(中線的鏡射)，e.x. $g = (1,3)(2,4)$  
+  所以我們有
+  $
+    r &= 1/8 (n^4 + 2n + 2n^2 + 2n^3 +2n^4) \
+    r &= 1/8 (n^4 + 2n^3 + 2n^2 +2n)
+  $
+]
+
+#example[
+  我們現在有$n$個顏色，幫一個正六面體上色，可以通過旋轉變換得到視為相同的著色方式。總共有多少種不同的著色方式？
+  #grid(
+    columns: (1fr,1fr),
+    rows: (auto),
+    align: center,
+    cetz.canvas({
+      import cetz.draw:*
+      ortho(x:20deg,y:45deg,z:0deg,{
+        on-xy(z:-1,{
+          rect((-1,-1),(1,1),fill: rgb("e8e8f8"))
+        })
+        on-xy(z:1,{
+          rect((-1,-1),(1,1),fill: rgb(silver))
+        })
+        on-yz(x:-1,{
+          rect((-1,-1),(1,1))
+        })
+        on-yz(x:1,{
+          rect((-1,-1),(1,1))
+        })
+        on-xz(y:-1,{
+          rect((-1,-1),(1,1))
+        })
+        on-xz(y:1,{
+          rect((-1,-1),(1,1))
+        })
+      })
+    }),
+    cetz.canvas({
+      import cetz.draw:*
+      rect((0,0),(1,1),name: "1")
+      rect((1,0),(2,1))
+      rect((2,0),(3,1))
+      rect((3,0),(4,1))
+      rect((1,1),(2,2))
+      rect((1,0),(2,-1))
+      content((0.5,0.5),[*1*])
+      content((1.5,0.5),[*2*])
+      content((2.5,0.5),[*3*])
+      content((3.5,0.5),[*4*])
+      content((1.5,1.5),[*5*])
+      content((1.5,-0.5),[*6*])
+      
+    })
+  )
+  
+]
