@@ -1,7 +1,6 @@
 #import "./typst_packages/lecture.typ": *
 #import "@preview/cetz:0.2.2"
-
-
+#import "@preview/fletcher:0.4.5" as fletcher: diagram,node,edge
 
 // #show par: set block(spacing: 0.01em)
 // #show figure: set block(spacing: 0em)
@@ -109,19 +108,127 @@
   根據反元素的定義，$(a b)^(-1) = b^(-1) a^(-1)$
 ]
 
-= 置換群
+= 置換群(Permutation Group)
+我們接下來討論一個特殊的群，置換群。考慮一個集合$A = {1,2,3,4,5}$，我們可以將$A$的元素重新排列成$A = {3,1,5,2,4}$。我們可以將這個排列表示成一個函數$phi : A -> A$，這個函數將$1$映射到$3$，$2$映射到$1$，以此類推。我們可以將這個排列表示成一個表格，如@fig1 所示。 我們稱這樣的函數為一個*置換*。但是，@fig2 的函數不是一個置換，因為$4$沒有被任何一個元素映射到。
+
+#grid(
+  columns: (1fr,1fr),
+  rows: (auto),
+  align: center,
+  [#figure(
+    $
+      1 -> 3\
+      2 -> 4\
+      3 -> 5\
+      4 -> 2\
+      5 -> 1
+    $,
+    caption: "一個置換", 
+  ) <fig1>],
+  [#figure(
+    $
+      1 -> 2\
+      2 -> 3\
+      3 -> 2\
+      4 -> 5\
+      5 -> 1\
+    $,
+    caption: "不是置換",
+  )<fig2>]
+)
+
+#definition[
+  一個$A$的是*置換*是一個一一對應的函數 $phi : A -> A$。 (one-one and onto)
+]
+我們現在給定兩個置換 $tau$ 和 $sigma$ ，我們定義他們的合成 $sigma cir tau$，對於所有的 $x in A$，
+$ 
+(sigma cir tau)(x) = sigma(tau(x)) \
+A -->^tau A -->^sigma A
+$
+因為 $tau$ 和 $sigma$ 是一一對應的函數，所以 $sigma cir tau$ 也是一一對應的函數。所以 $sigma cir tau$ 是一個置換。
+#example[
+  #let msigma = $mat(
+      1, 2, 3, 4, 5;
+      3, 4, 5, 2, 1
+    )$
+  #let mtau = $mat(
+      1, 2, 3, 4, 5;
+      2, 3, 4, 5, 1
+    )$
+  對於上的 $sigma$ 我們可以表示成，
+  $
+    sigma = msigma
+  $
+  定義 $tau$ 為，
+  $
+    tau = mtau
+  $
+  我們可以計算 $sigma cir tau$，
+  $
+    sigma cir tau 
+    = msigma cir mtau 
+    = mat(
+      1, 2, 3, 4, 5;
+      4, 5, 2, 1, 3
+    )
+  $
+  所以像是 $sigma cir tau (1) = sigma(tau(1)) = sigma(2) = 4$
+]
+#definition[
+  一個集合$A$的所有置換構成一個群，我們稱這個群為$A$的*置換群*，記作$S_A$。
+]
+#remark[
+  $S_n$ 表示 $n$ 個元素的置換群。
+  $S_n$的order是 $n!$。
+]
+== 循環置換 (Cyclc)
+一個置換除了可以用上述的方法表示，我們還可以用*循環*的方式表示。我們來看蝦面的例子，
+定義一個置換$ sigma = mat(1, 2, 3, 4, 5; 3, 4, 5, 2, 1) $
+我們觀察一下 $sigma$ 的作用，可以發現 $sigma$ 將 $1 -> 3 -> 5 -> 1$，$2 -> 4 -> 2$，所以我們可以將 $sigma$ 表示成一個循環 $(1,3,5)(2,4)$。
+
+#figure(
+  grid(
+    columns: (1fr,1fr),
+    rows: (auto),
+    align: center,
+    diagram(
+      {
+        // traingle
+        let (p1,p3,p5) = ((0,0),(1,0),(0.5,0.866))
+        node(p1,[*1*])
+        node(p3,[*3*])
+        node(p5,[*5*])
+        edge(p1,p3,"->",bend: 60deg)
+        edge(p3,p5,"->",bend: 60deg)
+        edge(p5,p1,"->",bend: 60deg) 
+      }
+    ),
+    diagram(
+      {
+        // traingle
+        let (p2,p4) = ((0,0),(1,0))
+        node(p2,[*2*])
+        node(p4,[*4*])
+        edge(p2,p4,"->",bend: 60deg)
+        edge(p4,p2,"->",bend: 60deg)
+      }
+    )
+  )
+
+)
 
 = 空間對稱群
+
 
 = 作用群(Group Action)
 
 #let gset = $G negspace textb("-set")$
 
 #definition[
-  一個群$G$對一個集合$A$的*作用*是一個映射$* : G times A -> A$，滿足以下條件：
+  一個群$G$對一個集合$A$的*作用*是一個映射 $* : G times A -> A$，滿足以下條件：
   #set enum(numbering: al("1."))
-  + 對於所有$a in A quad e a = a$
-  + 對於所有$a in A$ 和 $g,h in G$，$(g h)a = g(h a)$
+  + 對於所有 $a in A quad e a = a$
+  + 對於所有 $a in A$ 和 $g,h in G$，$(g h)a = g(h a)$
 
   在這個情況下，我們稱$A$是一個#gset。
 ]
@@ -186,8 +293,9 @@
   $
 ]
 #proof[
+  (雙重計數)
   #set math.equation(numbering: "(1)")
-  我們考慮數組$(g,x)$，其中$g x = x$。假設這樣的樹組有$N$個。
+  我們考慮序組$(g,x)$，其中$g x = x$。假設這樣的樹組有$N$個。
   對於每一個$g in G$，我們計算$(g,x)$的數量，這個數量是$abs(X^g)$。所以
   $
     N = sum_(g in G) abs(X^g)
@@ -326,6 +434,6 @@ $
     r &= 1/24 (n^6 + 3n^4 + 12n^3 + 8n^2)
   $
 ]
-#example[
-  現在我們有一串項鍊，我們有$n$個不同的珠子，我們要把這些珠子串成一串項鍊，可以通過旋轉變換得到視為相同的項鍊。總共有多少種不同的項鍊？
-]
+// #example[
+//   現在我們有一串項鍊，我們有$n$個不同的珠子，我們要把這些珠子串成一串項鍊，可以通過旋轉變換得到視為相同的項鍊。總共有多少種不同的項鍊？
+// ]
