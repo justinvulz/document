@@ -184,7 +184,7 @@ $
 == 循環置換 (Cyclc)
 一個置換除了可以用上述的方法表示，我們還可以用*循環*的方式表示。我們來看蝦面的例子，
 定義一個置換$ sigma = mat(1, 2, 3, 4, 5; 3, 4, 5, 2, 1) $
-我們觀察一下 $sigma$ 的作用，可以發現 $sigma$ 將 $1 -> 3 -> 5 -> 1$，$2 -> 4 -> 2$，所以我們可以將 $sigma$ 表示成一個循環 $(1,3,5)(2,4)$。
+我們觀察一下 $sigma$ 的作用，可以發現 $sigma$ 將 $1 -> 3 -> 5 -> 1$，$2 -> 4 -> 2$，所以我們可以將 $sigma$ 表示成一個循環 $sigma = (1,3,5)(2,4)$。
 
 #figure(
   grid(
@@ -198,9 +198,9 @@ $
         node(p1,[*1*])
         node(p3,[*3*])
         node(p5,[*5*])
-        edge(p1,p3,"->",bend: 60deg)
-        edge(p3,p5,"->",bend: 60deg)
-        edge(p5,p1,"->",bend: 60deg) 
+        edge(p1,p3,"->",bend: 55deg)
+        edge(p3,p5,"->",bend: 55deg)
+        edge(p5,p1,"->",bend: 55deg) 
       }
     ),
     diagram(
@@ -209,15 +209,70 @@ $
         let (p2,p4) = ((0,0),(1,0))
         node(p2,[*2*])
         node(p4,[*4*])
-        edge(p2,p4,"->",bend: 60deg)
-        edge(p4,p2,"->",bend: 60deg)
+        edge(p2,p4,"->",bend: 55deg)
+        edge(p4,p2,"->",bend: 55deg)
       }
     )
-  )
+  ),
+  caption: "一個置換的循環"
 
 )
 
-= 空間對稱群
+= 空間對稱群(Symmetry Groups)
+接下來我們考慮一種特殊的置換群，稱為*空間對稱群*。我們考慮一個正方形，將正方形的頂點邊繼承$1,2,3,4$(@fig3)，然後我們把順時鐘旋轉$90 degree$ 得到一個新的正方形(@sqr90)所示。我們可以將這個操作表示成一個置換:
+$ rho_1 = mat(1,2,3; 2,3,1) = (1,2,3) $。
+#let (p1,p2,p3) = ((0,0),(1,0),(0.5,-0.866))
+#grid(
+  columns: (1fr,1fr,1fr),
+  rows: (auto),
+  align: center,
+  [#figure(
+    diagram(
+      {
+        node(p1,[*1*])
+        node(p2,[*2*])
+        node(p3,[*3*])
+        edge(p1,p2,"-")
+        edge(p2,p3,"-")
+        edge(p3,p1,"-")
+      }
+    ),
+    caption: "正三角形", 
+  )<fig3>],
+  [#figure(
+    diagram({
+      node(p1,[*2*])
+      node(p2,[*3*])
+      node(p3,[*1*])
+      edge(p1,p2,"-")
+      edge(p2,p3,"-")
+      edge(p3,p1,"-")
+      
+    }),
+    caption: [順時針旋轉 $120$ 度],
+  )<sqr90>],
+  [#figure(
+    diagram({
+      node(p1,[*1*])
+      node(p2,[*3*])
+      node(p3,[*2*])
+      edge(p1,p2,"-")
+      edge(p2,p3,"-")
+      edge(p3,p1,"-")
+      let mid = ((p2.at(0)+p3.at(0))/1.9,(p2.at(1)+p3.at(1))/1.9)
+      edge((0,0),mid,stroke: red)
+    }),
+    caption: [沿某一軸鏡射],
+  )<sqf1>]
+)
+接下來看一下 @fig3 到 @sqf1 的變換，我們可以得到另一個置換 $ tau_1 = mat(1,2,3;1,3,2)  = (1)(2,3) $。
+接著我考慮 $tau_1 cir rho_1$ 這個置換，先把三角形旋轉$90 degree$，再把它沿著@sqf1 的軸鏡射，我們可以得到一個新的置換 :
+$
+  tau_1 cir rho_1 &= mat(1,2,3;1,3,2) mat(1,2,3;2,3,1) \
+    &= mat(1,2,3;3,1,2) \
+    &= (1,3,2)
+$
+
 
 
 = 作用群(Group Action)
