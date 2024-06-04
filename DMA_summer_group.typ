@@ -220,7 +220,8 @@ $
 
 = 空間對稱群(Symmetry Groups)
 接下來我們考慮一種特殊的置換群，稱為*空間對稱群*。我們考慮一個正方形，將正方形的頂點邊繼承$1,2,3,4$(@fig3)，然後我們把順時鐘旋轉$90 degree$ 得到一個新的正方形(@sqr90)所示。我們可以將這個操作表示成一個置換:
-$ rho_1 = mat(1,2,3; 2,3,1) = (1,2,3) $。
+$ rho_1 = mat(1,2,3; 2,3,1) = (1,2,3) $
+我們稱這樣的置換是*對稱置換*，他可以把圖形打回自身。
 #let (p1,p2,p3) = ((0,0),(1,0),(0.5,-0.866))
 #grid(
   columns: (1fr,1fr,1fr),
@@ -265,12 +266,90 @@ $ rho_1 = mat(1,2,3; 2,3,1) = (1,2,3) $。
     caption: [沿某一軸鏡射],
   )<sqf1>]
 )
-接下來看一下 @fig3 到 @sqf1 的變換，我們可以得到另一個置換 $ tau_1 = mat(1,2,3;1,3,2)  = (1)(2,3) $。
+接下來看一下 @fig3 到 @sqf1 的變換，我們可以得到另一個置換 
+$ tau_1 = mat(1,2,3;1,3,2)  = (1)(2,3) $
 接著我考慮 $tau_1 cir rho_1$ 這個置換，先把三角形旋轉$90 degree$，再把它沿著@sqf1 的軸鏡射，我們可以得到一個新的置換 :
 $
   tau_1 cir rho_1 &= mat(1,2,3;1,3,2) mat(1,2,3;2,3,1) \
     &= mat(1,2,3;3,1,2) \
     &= (1,3,2)
+$
+而 $tau_1 cir rho_1$ 這個置換就是沿著另一個軸鏡射的置換。如下圖所示：
+#grid(
+  columns: (1fr,1fr,1fr),
+  rows: (auto),
+  align: center,
+  [#figure(
+    diagram(
+      {
+        node(p1,[*1*])
+        node(p2,[*2*])
+        node(p3,[*3*])
+        edge(p1,p2,"-")
+        edge(p2,p3,"-")
+        edge(p3,p1,"-")
+      }
+    ),
+    caption: "正三角形", 
+  )],
+  [#figure(
+    diagram({
+      node(p1,[*2*])
+      node(p2,[*3*])
+      node(p3,[*1*])
+      edge(p1,p2,"-")
+      edge(p2,p3,"-")
+      edge(p3,p1,"-")
+      
+    }),
+    caption: [$rho_1$],
+  )],
+  [#figure(
+    diagram({
+      node(p1,[*2*])
+      node(p2,[*1*])
+      node(p3,[*3*])
+      edge(p1,p2,"-")
+      edge(p2,p3,"-")
+      edge(p3,p1,"-")
+      edge(p3,(0.5,0.1),stroke: red)
+    }),
+    caption: [$tau_1 cir rho_1$],
+  )]
+)
+我們可以繼續枚舉所有三角形的對稱操作，我們可以得到以下的置換:
+$
+  e = rho_0 &= (1)(2)(3)  & textr("不動")\
+  rho_1 &= (1,2,3) & textr("旋轉 120 度") \
+  rho_2 &= (1,3,2) & textr("旋轉 240 度") \
+  tau_1 &= (1)(2,3) & textr("鏡射") \
+  tau_2 &= (1,3,2) & textr("鏡射") \
+  tau_3 &= (1,2)(3) & textr("鏡射") \
+$
+把上述的對稱置換收集起來，並用上面提到的$cir$當作二運算，我們可以得到一個*空間對稱群*，稱為正三角形的對稱群$D_3$。我們可以將$D_3$寫成一個表格：
+$
+  D_3 = {e, rho_1, rho_2, tau_1, tau_2, tau_3} 
+$
+#set table(stroke: (x,y) =>(
+  bottom: if y==0  {1pt},
+  right: if x==0 {1pt},
+))
+#figure(
+  table(
+    align: center,
+    columns: (2em,2em,2em,2em,2em,2em,2em),
+    $cir$, $e$, $rho_1$, $rho_2$, $tau_1$, $tau_2$, $tau_3$,
+    $e$, $e$, $rho_1$, $rho_2$, $tau_1$, $tau_2$, $tau_3$,
+    $rho_1$, $rho_1$, $rho_2$, $e$, $tau_3$, $tau_1$, $tau_2$,
+    $rho_2$, $rho_2$, $e$, $rho_1$, $tau_2$, $tau_3$, $tau_1$,
+    $tau_1$, $tau_1$, $tau_3$, $tau_2$, $e$, $rho_2$, $rho_1$,
+    $tau_2$, $tau_2$, $tau_1$, $tau_3$, $rho_2$, $e$, $rho_1$,
+    $tau_3$, $tau_3$, $tau_2$, $tau_1$, $rho_1$, $rho_2$, $e$
+  )
+)
+同樣的，我們可以考慮正方形的對稱群$D_4$，正方形的對稱群有$8$個元素，我們可以將$D_4$寫成一個表格：
+$
+  D_4 = {e, rho_1, rho_2, rho_3, tau_1, tau_2, tau_3, tau_4}
 $
 
 
