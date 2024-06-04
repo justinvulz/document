@@ -2,23 +2,6 @@
 #import "@preview/cetz:0.2.2"
 #import "@preview/fletcher:0.4.5" as fletcher: diagram,node,edge
 
-// #show par: set block(spacing: 0.01em)
-// #show figure: set block(spacing: 0em)
-// #show par: p => [
-//   // #v(-0.5em)
-//   #block(fill: aqua)[
-//     #p
-//   ]
-//   // #v(-0.5em)
-//   sdds
-// ]
-// #show figure: f => [
-//   // #block(stroke: aqua,outset: 1pt)[
-//   //   #f
-//   // ]
-//   23dfsaaaaaaaaa
-// ]
-
 #show par: set block(spacing: 0.9em)
 #show math.equation: set block(spacing: 0.9em)
 
@@ -36,6 +19,8 @@
 在數學中，群論 (Group theory) 研究名為「群」的代數構。
 群論在許多的領域都有很重要的應用。像是，倍立方、化圓為方  、三等分角，五次多項式 2 公式 i 無法解的原因都可以用群論來解釋。
 另外，像是標準粒子模型、量子力學 (李群)、晶體結構、密碼學等領域也有很多群論的應用。
+
+#outline()
 
 = 群 (Group) 
 
@@ -351,6 +336,9 @@ $
 $
   D_4 = {e, rho_1, rho_2, rho_3, tau_1, tau_2, tau_3, tau_4}
 $
+
+== 計算對稱群的order
+
 
 
 
