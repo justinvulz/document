@@ -2,10 +2,14 @@
 #import "@preview/ctheorems:1.1.2": *
 #import "/typst_packages/lecture.typ": *
 #import "@preview/pinit:0.1.4": *
-#import "@preview/cuti:0.2.1": show-fakebold
+#import "@preview/cuti:0.2.1": show-fakebold, regex-fakeitalic
 #import "@preview/fletcher:0.4.5" as fletcher: diagram,node,edge
 #import themes.university: *
 #show :show-fakebold
+#show text.where(style:"italic"): t =>[
+  // #regex-fakeitalic(reg-exp: "[\p{script=Han}]",t)
+dsadaaaaaaaaaaaaaaaaaaaaaaaaa
+]
 
 #let uncv = uncover
 #set list(marker: listal)
@@ -298,7 +302,7 @@
 ]
 #slide(title:"置換的合成")[
   #set text(size: 19pt)
-  #definition(number:"2.2")[
+  #definition(number:none)[
     讓$sigma$和$tau$是兩個置換，定義$sigma$和$tau$的*合成*是一個新的置換$sigma cir tau$，使得對於所有的$a in A$，
     $ (sigma cir tau)(a) = sigma(tau(a)) $
   ]
@@ -308,6 +312,8 @@
   (sigma cir tau)(x) = sigma(tau(x)) \
   A -->^tau A -->^sigma A
   $
+  因為$sigma$和$tau$都是一一對應的函數，所以$sigma cir tau$也是一一對應的函數。\
+  所以 $sigma cir tau$ 是一個置換。
 ]
 #let msigma = $mat(
     1, 2, 3, 4, 5;
@@ -326,6 +332,7 @@
     $ tau = mtau $
   )
   #pause
+  #v(-0.5em)
   $
     sigma cir tau 
     = msigma cir mtau 
@@ -334,6 +341,43 @@
       4, 5, 2, 1, 3
     )
   $
+  #pause
+  #align(center)[
+    #diagram(spacing: (5em,0.3em),{
+      let nd(x) = ((x,0), (x,1), (x,2), (x,3), (x,4))
+      for x in range(3){
+        for y in range(5){
+          node((x,y), [#(y+1)])
+        }
+      }
+      node((0.5,0),[#show math.equation: set text(fill: teal);$tau$])
+      node((1.5,0),[#show math.equation: set text(fill: red);$sigma$])
+      node(enclose:nd(0)+nd(1),stroke: teal)
+      node(enclose:nd(1)+nd(2),stroke: red)
+      let edgearr = (
+        ((0,0),(1,1)),
+        ((0,1),(1,2)),
+        ((0,2),(1,3)),
+        ((0,3),(1,4)),
+        ((0,4),(1,0)),
+
+        ((1,0),(2,2)),
+        ((1,1),(2,3)),
+        ((1,2),(2,4)),
+        ((1,3),(2,1)),
+        ((1,4),(2,0))
+      )
+      for e in edgearr{
+        edge(e.at(0),e.at(1),"->")
+      }
+    })
+  ]
+]
+#slide(title: "置換群")[
+  #set text(size: 19pt)
+  #definition(number:"2.2")[
+    一個集合$A$的所有置換構成一個_群_，稱為$A$的*置換群*，記為$S_A$。
+  ]
   #pause
   
 ]
