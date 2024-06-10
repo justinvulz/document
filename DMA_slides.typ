@@ -379,5 +379,108 @@ dsadaaaaaaaaaaaaaaaaaaaaaaaaa
     一個集合$A$的所有置換構成一個_群_，稱為$A$的*置換群*，記為$S_A$。
   ]
   #pause
-  
+  #set text(size: 25pt)
+  #remark[
+    $n$個元素的集合的置換群計為$S_n$的order為$n!$。
+  ]
+  #pause
+  #example[
+    \
+    上述的例子中，$tau$和$sigma$是$S_5$的元素。\
+    $S_5$的order為$5! = 120$。
+  ]
 ]
+#slide(title: "循環表示法(Cycle)")[
+  $ sigma = mat(1, 2, 3, 4, 5; 3, 4, 5, 2, 1) $
+  #pause
+  #v(2em)
+  #only(2)[
+    #grid(
+      columns: (1fr,1fr),
+      rows: (auto),
+      align: center,
+      diagram(
+        {
+          // traingle
+          let (p1,p3,p5) = ((0,0),(1,0),(0.5,0.866))
+          node(p1,[*1*])
+          node(p3,[*3*])
+          edge(p1,p3,"->",bend: 55deg)
+
+        }
+      ),
+      diagram(
+        {
+          // traingle
+          let (p2,p4) = ((0,0),(1,0))
+          node(p2,[*2*])
+          node(p4,[*4*])
+          edge(p2,p4,"->",bend: 55deg)
+        }
+      )
+    )
+  ]
+  #only(3)[
+    #grid(
+      columns: (1fr,1fr),
+      rows: (auto),
+      align: center,
+      diagram(
+        {
+          // traingle
+          let (p1,p3,p5) = ((0,0),(1,0),(0.5,0.866))
+          node(p1,[*1*])
+          node(p3,[*3*])
+          node(p5,[*5*])
+          edge(p1,p3,"->",bend: 55deg)
+          edge(p3,p5,"->",bend: 55deg)
+        }
+      ),
+      diagram(
+        {
+          // traingle
+          let (p2,p4) = ((0,0),(1,0))
+          node(p2,[*2*])
+          node(p4,[*4*])
+          edge(p2,p4,"->",bend: 55deg)
+          edge(p4,p2,"->",bend: 55deg)
+        }
+      )
+    )
+  ]
+  #only("4-")[
+    #grid(
+      columns: (1fr,1fr),
+      rows: (auto),
+      align: center,
+      diagram(
+        {
+          // traingle
+          let (p1,p3,p5) = ((0,0),(1,0),(0.5,0.866))
+          node(p1,[*1*])
+          node(p3,[*3*])
+          node(p5,[*5*])
+          edge(p1,p3,"->",bend: 55deg)
+          edge(p3,p5,"->",bend: 55deg)
+          edge(p5,p1,"->",bend: 55deg) 
+        }
+      ),
+      diagram(
+        {
+          // traingle
+          let (p2,p4) = ((0,0),(1,0))
+          node(p2,[*2*])
+          node(p4,[*4*])
+          edge(p2,p4,"->",bend: 55deg)
+          edge(p4,p2,"->",bend: 55deg)
+        }
+      )
+    )
+  ]
+  #uncv("5-")[
+    $
+      sigma = (1,3,5)(2,4)
+    $
+  ]
+]
+
