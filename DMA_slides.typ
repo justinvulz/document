@@ -484,3 +484,62 @@ dsadaaaaaaaaaaaaaaaaaaaaaaaaa
   ]
 ]
 
+#new-section-slide("空間對稱群",subtitle:"Symmetry Group")
+#let (p1,p2,p3) = ((0,0),(1,0),(0.5,-0.866))
+
+#slide(title:"對稱群")[
+  #set figure(supplement: none)
+  我們接下來考慮一種特殊的置換群。\
+  #pause
+  #grid(
+    columns: (1fr,1fr,1fr),
+    rows: (auto),
+    align: center,
+    [#uncv("2-")[#figure(
+      diagram(
+        {
+          node(p1,[*1*])
+          node(p2,[*2*])
+          node(p3,[*3*])
+          edge(p1,p2,"-")
+          edge(p2,p3,"-")
+          edge(p3,p1,"-")
+        }
+      ),
+      caption: "正三角形", 
+    )]],
+    [#uncv("3-")[#figure(
+      diagram({
+        node(p1,[*2*])
+        node(p2,[*3*])
+        node(p3,[*1*])
+        edge(p1,p2,"-")
+        edge(p2,p3,"-")
+        edge(p3,p1,"-")
+
+      }),
+      caption: [順時針旋轉 $120$ 度],
+    )]],
+    [#uncv("4-")[#figure(
+      diagram({
+        node(p1,[*1*])
+        node(p2,[*3*])
+        node(p3,[*2*])
+        edge(p1,p2,"-")
+        edge(p2,p3,"-")
+        edge(p3,p1,"-")
+        let mid = ((p2.at(0)+p3.at(0))/1.9,(p2.at(1)+p3.at(1))/1.9)
+        edge((0,0),mid,stroke: red)
+      }),
+      caption: [沿某一軸鏡射],
+    )]]
+  ) 
+  #uncv("3-")[
+    #block(width:100%,height:100%)[
+      #align(left+horizon)[
+        $rho_1 = mat(1,2,3; 2,3,1) = (1,2,3)$
+      ]
+
+    ]
+  ]
+]
