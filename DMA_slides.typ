@@ -4,6 +4,8 @@
 #import "@preview/pinit:0.1.4": *
 #import "@preview/cuti:0.2.1": show-fakebold, regex-fakeitalic
 #import "@preview/fletcher:0.4.5" as fletcher: diagram,node,edge
+#import "@preview/cetz:0.2.2"
+
 #import themes.university: *
 #show :show-fakebold
 #show text.where(style:"italic"): t =>[
@@ -495,7 +497,7 @@ dsadaaaaaaaaaaaaaaaaaaaaaaaaa
     columns: (1fr,1fr,1fr),
     rows: (auto),
     align: center,
-    [#uncv("2-")[#figure(
+    uncv("2-")[#figure(
       diagram(
         {
           node(p1,[*1*])
@@ -507,8 +509,8 @@ dsadaaaaaaaaaaaaaaaaaaaaaaaaa
         }
       ),
       caption: "正三角形", 
-    )]],
-    [#uncv("3-")[#figure(
+    )],
+    uncv("3-")[#figure(
       diagram({
         node(p1,[*2*])
         node(p2,[*3*])
@@ -519,8 +521,8 @@ dsadaaaaaaaaaaaaaaaaaaaaaaaaa
 
       }),
       caption: [順時針旋轉 $120$ 度],
-    )]],
-    [#uncv("4-")[#figure(
+    )],
+    uncv("4-")[#figure(
       diagram({
         node(p1,[*1*])
         node(p2,[*3*])
@@ -532,14 +534,288 @@ dsadaaaaaaaaaaaaaaaaaaaaaaaaa
         edge((0,0),mid,stroke: red)
       }),
       caption: [沿某一軸鏡射],
-    )]]
+    )]
   ) 
-  #uncv("3-")[
-    #block(width:100%,height:100%)[
-      #align(left+horizon)[
-        $rho_1 = mat(1,2,3; 2,3,1) = (1,2,3)$
-      ]
-
-    ]
+  #grid(
+    columns: (1fr,1fr),
+    rows: (100pt),
+    align: center+horizon,
+    uncv("3-")[$rho_1 = mat(1,2,3; 2,3,1) = (1,2,3)$],
+    uncv("4-")[$tau_1 = mat(1,2,3; 1,3,2) = (1)(2,3)$]
+  )
+  #uncv("5-")[
+    我們稱這些置換為*對稱置換*。
   ]
+]
+#slide(title:"對稱群")[
+  #set figure(supplement: none)
+  // #set text(size: 25pt)
+  #grid(
+    columns: (1fr,1fr),
+    rows: (20%),
+    align: center+horizon,
+    $rho_1 = mat(1,2,3; 2,3,1) = (1,2,3)$,
+    $tau_1 = mat(1,2,3; 1,3,2) = (1)(2,3)$
+  )
+  #set text(size: 20pt)
+  #grid(
+    columns: (1fr,1fr,1fr),
+    rows: (auto),
+    align: center,
+    [#figure(
+      diagram(
+        {
+          node(p1,[*1*])
+          node(p2,[*2*])
+          node(p3,[*3*])
+          edge(p1,p2,"-")
+          edge(p2,p3,"-")
+          edge(p3,p1,"-")
+        }
+      ),
+      caption: "正三角形", 
+    )],
+    [#figure(
+      diagram({
+        node(p1,[*2*])
+        node(p2,[*3*])
+        node(p3,[*1*])
+        edge(p1,p2,"-")
+        edge(p2,p3,"-")
+        edge(p3,p1,"-")
+
+      }),
+      caption: [$rho_1$],
+    )],
+    [#figure(
+      diagram({
+        node(p1,[*2*])
+        node(p2,[*1*])
+        node(p3,[*3*])
+        edge(p1,p2,"-")
+        edge(p2,p3,"-")
+        edge(p3,p1,"-")
+        edge(p3,(0.5,0.1),stroke: red)
+      }),
+      caption: [$tau_1 cir rho_1$],
+    )]
+  )
+  #set text(size: 25pt)
+  #align(center)[
+    $
+      tau_1 cir rho_1 &= mat(1,2,3;1,3,2) mat(1,2,3;2,3,1) 
+      &= mat(1,2,3;3,1,2) 
+      &= (1,3,2)
+    $
+  ]
+  #pause
+  對稱置換的#underline("合成")還是一個對稱置換。
+]
+#slide(title:[$D_3$])[
+  我們把三角形的所有對稱的置換枚舉出來：
+  #set text(size: 21pt)
+  $
+    e = rho_0 &= (1)(2)(3)  & textr("不動")\
+    rho_1 &= (1,2,3) & textr("旋轉 120 度") \
+    rho_2 &= (1,3,2) & textr("旋轉 240 度") \
+    tau_1 &= (1)(2,3) & textr("鏡射") \
+    tau_2 &= (1,3,2) & textr("鏡射") \
+    tau_3 &= (1,2)(3) & textr("鏡射") \
+  $
+  #pause
+  #set text(size: 25pt)
+  把上述的對稱置換構成的群稱為$D_3$，稱為*正三角形的空間對稱群*。
+]
+#slide(title:[$D_3$])[
+  $
+    D_3 = {e, rho_1, rho_2, tau_1, tau_2, tau_3} 
+  $
+  #set table(stroke: (x,y) =>(
+    bottom: if y==0  {1pt},
+    right: if x==0 {1pt},
+  ))
+  #figure(
+    table(
+      align: center,
+      columns: (2em,2em,2em,2em,2em,2em,2em),
+      $cir$, $e$, $rho_1$, $rho_2$, $tau_1$, $tau_2$, $tau_3$,
+      $e$, $e$, $rho_1$, $rho_2$, $tau_1$, $tau_2$, $tau_3$,
+      $rho_1$, $rho_1$, $rho_2$, $e$, $tau_3$, $tau_1$, $tau_2$,
+      $rho_2$, $rho_2$, $e$, $rho_1$, $tau_2$, $tau_3$, $tau_1$,
+      $tau_1$, $tau_1$, $tau_3$, $tau_2$, $e$, $rho_2$, $rho_1$,
+      $tau_2$, $tau_2$, $tau_1$, $tau_3$, $rho_2$, $e$, $rho_1$,
+      $tau_3$, $tau_3$, $tau_2$, $tau_1$, $rho_1$, $rho_2$, $e$
+    )
+  )
+]
+#slide(title:[$D_4$])[
+
+  #grid(
+    columns: (1fr,1fr),
+    rows: (auto),
+    align: center,
+    [
+      $
+        D_4 = {e, rho_1, rho_2, rho_3, tau_1, tau_2, tau_3, tau_4}
+      $
+      #v(20%)
+      #figure(
+        diagram({
+          node((0,0),[1])
+          node((1,0),[2])
+          node((1,1),[3])
+          node((0,1),[4])
+          edge((0,0),(1,0),"-")
+          edge((1,0),(1,1),"-")
+          edge((1,1),(0,1),"-")
+          edge((0,1),(0,0),"-")
+
+          node((0.5,-0.5),[#set text(fill: red);$tau_3$])
+          edge((0.5,-0.1),(0.5,1.1),"-",stroke: red)
+          
+          node((-0.5,0.5),[#set text(fill: lime);$tau_4$])
+          edge((-0.1,0.5),(1.1,0.5),"-",stroke: lime)
+          
+          node((1.5,-0.5),[#set text(fill: teal);$tau_2$])
+          edge((1,0),(0,1),"-",stroke: teal)
+          
+          node((-0.5,-0.5),[#set text(fill: purple);$tau_1$])
+          edge((0,0),(1,1),"-",stroke: purple)
+        })
+      )
+    ],
+    [
+      $
+        e &= (1)(2)(3)(4) \
+        rho_1 &= (1,2,3,4)\
+        rho_2 &= (1,3)(2,4)\
+        rho_3 &= (1,4,3,2)\
+        tau_1 &= (1)(2,4)(3)\
+        tau_2 &= (1,3)(2)(4)\
+        tau_3 &= (1,2)(4,3)\
+        tau_4 &= (1,4)(2,3)\
+      $
+    ]
+  )
+]
+#slide(title:[$D_4$])[
+  #set figure(supplement: none)
+
+  值得注意的是 $sigma = (1,2)(4)(3)$ 他是一個置換，但不是一個對稱置換，因為他不能把正方形打回自身。
+  #v(20%)
+  #let (p1,p2,p3,p4) = ((0,0),(1,0),(1,1),(0,1))
+  #grid(
+    columns: (1fr,1fr,1fr),
+    rows: (auto),
+    figure(
+      diagram({
+        node(p1,[*1*])
+        node(p2,[*2*])
+        node(p3,[*3*])
+        node(p4,[*4*])
+        edge(p1,p2,"-")
+        edge(p2,p3,"-")
+        edge(p3,p4,"-")
+        edge(p4,p1,"-")
+      }),
+      caption: "正方形"
+    ),
+    figure(
+      diagram({
+        node(p1,[*3*])
+        node(p2,[*4*])
+        node(p3,[*1*])
+        node(p4,[*2*])
+        edge(p1,p2,"-")
+        edge(p2,p3,"-")
+        edge(p3,p4,"-")
+        edge(p4,p1,"-")
+      }),
+      caption: [$rho_2$]
+    ),
+    figure(
+      diagram({
+        node(p1,[*2*])
+        node(p2,[*1*])
+        node(p3,[*3*])
+        node(p4,[*4*])
+        edge(p1,p2,"-")
+        edge(p2,p4,"-")
+        edge(p3,p4,"-")
+        edge(p3,p1,"-")
+      }),
+      caption: [$sigma$ 不是一個對稱置換]
+    )
+  ) 
+]
+#slide(title: "如何計算空間對稱群")[
+  正$n$邊形的對稱群的order是#only("1")[多少?]#only("2")[ $2n$]。\
+  立方體的有#only("1")[多少]#only("2")[$24$個]不同的旋轉。
+  #set align(center)
+  #cetz.canvas(length: 90pt,{
+      import cetz.draw:*
+      ortho(x:20deg,y:45deg,z:0deg,{
+        
+        on-xy(z:-1,{
+          rect((-1,-1),(1,1),fill: rgb("e8e8f8"))
+        })
+        on-xy(z:1,{
+          rect((-1,-1),(1,1),fill: rgb(silver))
+        })
+        on-yz(x:-1,{
+          rect((-1,-1),(1,1))
+        })
+        on-yz(x:1,{
+          rect((-1,-1),(1,1))
+        })
+        on-xz(y:-1,{
+          rect((-1,-1),(1,1))
+        })
+        on-xz(y:1,{
+          rect((-1,-1),(1,1))
+        })
+      })
+    })
+]
+#new-section-slide("作用群",subtitle:"Group Action")
+#let gset = $G negspace textb("-set")$
+#slide(title: "作用群")[
+  #set text(size: 19pt)
+
+  #definition(number:"4.1")[
+    一個群$G$對一個集合$A$的*作用*是一個映射 $* : G times A -> A$，滿足以下條件：
+    #set enum(numbering: al("1."))
+    + 對於所有 $a in A quad e a = a$
+    + 對於所有 $a in A$ 和 $g,h in G$，$(g h)a = g(h a)$
+
+    在這個情況下，我們稱$A$是一個#gset。
+  ]
+  像是在上一章節中，我們考慮了對稱群$D_3$對正三角形的作用。
+]
+#slide(title:"作用群")[
+  #set text(size: 19pt)
+  #theorem(number:"4.1")[
+    讓$X$是一個#gset。如果$g x_1 = g x_2$，那$x_1 = x_2$
+  ]
+  #proof[
+    假設 $g x_1 = g x_2$，那麼 $g^(−1)g x_1 = g^(−1) g x_2$，所以 $e x_1 = e x_2$，所以 $x_1 = x_2$。
+  ]
+  #remark[
+    如果$x != y$，那$g x != g y$
+  ]
+]
+#let Stab = math.op("Stab")
+#slide(title: "不動點、穩定子群、軌道")[
+  *Fixed point, Stabilizers subgroup, Orbits*
+  #set text(size: 19pt)
+
+  #definition(number: "4.2")[
+    讓$X$是一個#gset，讓$x in X$，$g in G$。我們定義；
+    $
+      Stab_G (x) = {g in G | g x = x} \
+      X^g = {x in X | g x = x}
+    $
+    $Stab_G (x)$稱為$x$的*穩定子群*，$X^g$稱為$g$的*不動點*。
+  ]
+
 ]
