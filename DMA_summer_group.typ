@@ -20,7 +20,7 @@
 群論在許多的領域都有很重要的應用。像是，倍立方、化圓為方、三等分角，五次多項式無法解的原因都可以用群論來解釋。
 另外，像是標準粒子模型、量子力學 (李群)、晶體結構、密碼學等領域也有很多群論的應用。
 
-
+#set par(first-line-indent: 0em)
 
 = 群 (Group) 
 
@@ -461,21 +461,26 @@ $
 
 
 #theorem([軌道-穩定子定理 (Orbit-Stabilizer Theorem)])[
-  讓$G$是一個有限群，讓 $X$ 是一個 #gset，$x in X$，那麼 $abs(G) = abs(G_x) abs(G x)$。
+  讓$G$是一個有限群，讓 $X$ 是一個 #gset，$x in X$，那麼 $abs(G) = abs(G_x) abs(Stab_G (x))$。
 ] <orbit-stabilizer>
 
 #proof[
   定義$f:G -> G_x$，$f(g) = g x$。我們證明每一個在$G_x$裡的元素都被打到$abs(Stab_G (x))$這麼多次。\
   給定一個$y in G_x$，那麼存在$h in G$使得$y = h x$。\
-  如果$g in Stab_G (x)$，那$g x = x$，所以
+  \
+  我們先證明這個引理:  $f(g) = y <==> h^(-1) g in Stab_G (x)$。
+  \ $=>$：如果$f(g) = y$，那麼$g x = h x$，所以$h^(-1)g x = x$，所以$h^(-1)g in Stab_G (x)$。
+  \ $arrow.l.double$：如果$h^(-1) g in Stab_G (x)$，那麼$h^(-1) g x = x$，所以$g x = h x$，所以$f(g) = y$。\
+  \
+  接著我們來討論有多少 $g in G$ 使得 $h^(-1)g in Stab_G (x)$。\
   $
-    f(h g) = h g x = h x = y
+    h^(-1) g in Stab_G (x) &<==> exists tilde(g) in Stab_G (x) st h^(-1) g = tilde(g)\ 
+    &<==> exists tilde(g) in Stab_G (x) st g = h tilde(g)\
+    &<==> g in {h tilde(g) | tilde(g) in Stab_G (x)}
   $
-  如果$g in.not Stab_G (x)$，那麼$g x != x$，所以
-  $
-    f(h g) = h g x != h x = y
-  $
-  所以$y$被打到那麼多次$abs(Stab_G (x))$，所以$abs(G) = abs(G_x) abs(Stab_G (x))$。
+  所以，$f(g) = y <==> g in {h tilde(g) | tilde(g) in Stab_G (x)}$。因此，每個$y in G_x$ 都 $abs(Stab_G (x))$ 個 $g in G$ 使得 $f(g) = y$。\
+  所以，$abs(G) = abs(G_x) abs(Stab_G (x))$。
+
 ]
 == 伯恩賽德引理 (Burnside’s Lemma)
 #theorem([*伯恩賽德引理*])[
@@ -487,7 +492,7 @@ $
 #proof[
   (雙重計數)
   #set math.equation(numbering: "(1)")
-  我們考慮序組$(g,x)$，其中$g x = x$。假設這樣的樹組有$N$個。
+  我們考慮序組$(g,x)$，其中$g x = x$。假設這樣的序組有$N$個。
   對於每一個$g in G$，我們計算$(g,x)$的數量，這個數量是$abs(X^g)$。所以
   $
     N = sum_(g in G) abs(X^g)
@@ -525,7 +530,7 @@ $
   $
   根據*伯恩賽德引理*，我們有
   $
-    6r &= 4^3 +4 +4 +4^2 +4^2 + 4^2
+    6r &= 4^3 +4 +4 +4^2 +4^2 + 4^2 = 120\
     r &= 20
   $
   所以正三角形的相異著色方法有$20$種。
@@ -549,7 +554,7 @@ $
 
 #example[
   #let mg = $m_g$
-  我們考慮有$n$個顏色，對一個正四邊形上色，我們要求在對稱性下有幾種不同的著色方法。
+  我們考慮有$n$個顏色，對一個正四邊形的頂點上色，我們要求在對稱性下有幾種不同的著色方法。
   我們讓$G = D_4$是正四邊形的對稱群，$X$是所有著色的結果($abs(X) = n^4$)，所以我們要求$X$在$G$下有幾個軌道。根據前的討論，我們知道$abs(G) = 8$，然後我們計算不動點的個數：
   - 單位變換 $mg = 4$
   - $2$個$mg = 1$的旋轉($90 degree, 270 degree$)，e.x. $g = (1,2,3,4)$   

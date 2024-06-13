@@ -230,7 +230,7 @@ dsadaaaaaaaaaaaaaaaaaaaaaaaaa
     根據反元素的定義，$(a b)^(-1) = b^(-1) a^(-1)$
   ]
 ]
-
+#let slide = slide.with(title: none)
 #new-section-slide("置換群",subtitle:"Permutation Group")
 #slide(title:"置換")[
   $
@@ -817,5 +817,259 @@ dsadaaaaaaaaaaaaaaaaaaaaaaaaa
     $
     $Stab_G (x)$稱為$x$的*穩定子群*，$X^g$稱為$g$的*不動點*。
   ]
+  #pause
+  #v(1.5em)
+  - $X^e = X$
+  
+]
+#slide(title: "軌道")[
+  #set text(size: 19.5pt)
+  #theorem(number:"4.2")[
+    讓$X$是一個#gset，我們定義一個在$X$上的關係$tilde.op$，對於所有的$x,y in X$，$x tilde.op y$當且僅當存在$g in G$，使得$g x = y$。這個關係是一個等價關係。
+  ] <relation>
+  #pause
+  #proof[
+    自反性、對稱性、傳遞性
+    #uncv("3-")[\ *自反性*：對於所有的$x in X$，$x tilde.op x$，因為$e x = x$。]
+    
+    #uncv("4-")[\ *對稱性*：如果$x tilde.op y$，那麼存在$g in G$，使得$g x = y$，所以$g^(-1) y = x$，所以$y tilde.op x$。]
+    
+    #uncv("5-")[\ *傳遞性*：如果$x tilde.op y$且$y tilde.op z$，那麼存在$g,h in G$，使得$g x = y$且$h y = z$，所以$h g x = z$，所以$x tilde.op z$。]
+  ] 
+]
+#slide(title: "軌道")[
+  #set text(size: 19pt)
+  #definition(number:"4.3")[
+    讓$X$是一個#gset，每一個在 Therorem 4.2 下的等價類稱為一個*軌道*。如果$x in X$，包含$x$的分割是$x$的軌道，記作$G_x$。
+  ]
+  #theorem(number:"4.3")[
+    讓 $X$ 是一個 #gset，$x in X$，那麼 $x$ 的軌道 $G_x = {g x mid(|) g in G}$。
+  ]
+]
+#slide(title: "軌道-穩定子定理")[
+  #set text(size: 20pt)
+  #theorem([軌道-穩定子定理 (Orbit-Stabilizer Theorem)],number:"4.4")[
+    讓$G$是一個有限群，讓 $X$ 是一個 #gset，$x in X$，那麼 $abs(G) = abs(G_x) abs(Stab_G (x))$。
+  ] <orbit-stabilizer>
+  #figure(
+      image("pic/obstab.jpg",height: 250pt)
+  )
+]
+#slide(title:"Proof")[
+  #set text(size: 19pt)
 
+  定義$f:G -> G_x$，$f(g) = g x$。我們證明每一個在$G_x$裡的元素都被打到$abs(Stab_G (x))$這麼多次。\
+  給定一個$y in G_x$，那麼存在$h in G$使得$y = h x$。\
+  
+  #pause
+
+  我們先證明這個引理:  $f(g) = y <==> h^(-1) g in Stab_G (x)$。
+
+  #pause
+
+  \ $=>$：如果$f(g) = y$，那麼$g x = h x$，所以$h^(-1)g x = x$，所以$h^(-1)g in Stab_G (x)$。
+  #pause
+
+  \ $arrow.l.double$：如果$h^(-1) g in Stab_G (x)$，那麼$h^(-1) g x = x$，所以$g x = h x$，所以$f(g) = y$。\
+  
+] 
+#slide[
+  #set text(size: 19pt)
+  接著我們來討論有多少 $g in G$ 使得 $h^(-1)g in Stab_G (x)$。
+  #pause
+  $
+    h^(-1) g in Stab_G (x) &<==> exists tilde(g) in Stab_G (x) st h^(-1) g = tilde(g)\ 
+    &<==> exists tilde(g) in Stab_G (x) st g = h tilde(g)\
+    &<==> g in {h tilde(g) | tilde(g) in Stab_G (x)}
+  $
+  #pause
+  所以，$f(g) = y <==> g in {h tilde(g) | tilde(g) in Stab_G (x)}$。因此，每個$y in G_x$ 都 $abs(Stab_G (x))$ 個 $g in G$ 使得 $f(g) = y$。\
+  所以，$abs(G) = abs(G_x) abs(Stab_G (x))$。
+]
+#slide(title: "伯恩賽德引理 (Burnside’s Lemma)")[
+  #set text(size: 19pt)
+  #theorem([*伯恩賽德引理*],number:"4.5")[
+    讓$G$是一個有限群，讓$X$是一個#gset。讓$r$是$X$的軌道數，那麼
+    $
+      r dot abs(G) = sum_(g in G) abs(X^g)
+    $
+  ]
+  #set text(size: 23pt)
+  #pause
+  我們通過雙重計數來證明這個引理。考慮所有滿足$g x = x$的序組$(g,x)$，我們用兩種方式計數這些序組，這樣就會有一個很自然的等式。
+]
+#slide(title: "Proof")[
+  #set text(size: 19pt)
+  我們考慮序組$(g,x)$，其中$g x = x$。假設這樣的序組有$N$個。
+  對於每一個$g in G$，我們計算$(g,x)$的數量，這個數量是$abs(X^g)$。所以
+  $
+    N = sum_(g in G) abs(X^g)
+  $
+  #pause
+  另一方面，對於每一個$x in X$，我們計算$(g,x)$的數量，這個數量是$abs(Stab_G (x))$。所以
+  $
+    N = sum_(x in X) abs(Stab_G (x))
+  $
+]
+#slide[
+  #set text(size: 19pt)
+  根據 @orbit-stabilizer[*軌道穩定子定理* Thm]，$abs(Stab_G (x))abs(G_x) = abs(G)$，所以，
+  $
+    N = sum_(x in X) abs(Stab_G (x)) = sum_(x in X) abs(G) / abs(G_x) = abs(G) sum_(x in X) 1 / abs(G_x)
+  $ 
+  對於在相同軌道的元素，$abs(G_x)$是相同的。讓$cal(O)$是一個軌道，我們有
+  $
+    sum_(x in cal(O)) 1 / abs(G_x) = sum_(x in cal(O)) 1 / abs(cal(O)) = 1
+  $ 
+  因此，$ sum_(x in X) 1 / abs(G_x) = (textr("軌道的數量")) $
+]
+#slide[
+  $
+    N = abs(G) dot (textr("軌道的數量")) = abs(G) dot r
+  $ 
+
+  $ r dot abs(G) = sum_(g in G) abs(X^g) $
+]
+#slide(title: "Example")[
+  #set text(size: 19pt)
+  用$4$個顏色對一個正三角形的三個邊進行著色，有幾種不同的著色方法？(兩種著色方式被認為是相同的，如果他們可以通過旋轉、鏡射相互變換)
+  
+  #pause
+  
+  我們讓$G = D_3$是三角型的對稱群，$X$是所有著色的結果($abs(X) = 4^3$)，所以我們要求$X$在$G$下有幾個軌道。根據前的討論，我們知道$abs(G) = 6$，然後我們計算不動點的個數：
+  $
+    abs(X^(rho_0)) = 4^3\
+    abs(X^(rho_1)) = 4\
+    abs(X^(rho_2)) = 4\
+    abs(X^(tau_1)) = 4^2\
+    abs(X^(tau_2)) = 4^2\
+    abs(X^(tau_3)) = 4^2\
+  $
+
+]
+#slide[
+  #set text(size: 21pt)
+  根據*伯恩賽德引理*，我們有
+  $
+    6r &= 4^3 +4 +4 +4^2 +4^2 + 4^2 = 120\
+    r &= 20
+  $
+  所以正三角形的相異著色方法有$20$種。
+]
+#slide(title: "著色多項式")[
+  #set text(size: 19pt)
+  我們考慮我們有$n$個顏色，幫一個有對稱性的圖形上色，我們假設在對稱性下有$r$種上色方式。
+  讓$X$是所有上色方法的集合，讓$G$是該圖形的對稱群，根據博恩賽德引理，我們有
+  $
+    r = 1/abs(G) sum_(g in G) abs(X^g)
+  $
+  其中$X^g$是在$g$下的不動點的集合。
+  #pause
+  $
+    g = underbrace((1,2,3)(5,4) dots (\#,\#),m_g)
+  $
+  「每個循環內的顏色都一樣」   
+  $abs(X^g) = n^(m_g)$
+  #pause
+  $
+    r = 1/abs(G) sum_(g in G) abs(X^g) =  1/abs(G) sum_(g in G) n^(m_g)
+  $
+]
+#slide(title: "Example")[
+  #set text(size: 19pt)
+  #let mg = $m_g$
+  我們考慮有$n$個顏色，對一個正四邊形的頂點上色，我們要求在對稱性下有幾種不同的著色方法。
+
+  #pause
+
+  我們讓$G = D_4$是正四邊形的對稱群，$X$是所有著色的結果($abs(X) = n^4$)，我們知道$abs(G) = 8$
+  
+  #pause
+  #set text(size: 21pt)
+  #v(3em)
+  - 單位變換 $mg = 4$
+  - $2$個$mg = 1$的旋轉($90 degree, 270 degree$)，e.x. $g = (1,2,3,4)$   
+  - $1$個$mg = 2$的旋轉($180 degree$)，e.x. $g = (1,2)(3,4)$  
+  - $2$個$mg = 3$的鏡射(對角線的鏡射)，e.x. $g = (1)(3)(2,4)$ 
+  - $2$個$mg = 2$的鏡射(中線的鏡射)，e.x. $g = (1,3)(2,4)$  
+]
+#slide[
+  #set text(size: 21pt)
+  所以我們有
+  $
+    r &= 1/8 (n^4 + 2n + 2n^2 + 2n^3 +2n^4) \
+    r &= 1/8 (n^4 + 2n^3 + 2n^2 +2n)
+  $
+]
+#slide(title: "Example")[
+  我們現在有$n$個顏色，幫一個正六面體上色，可以通過旋轉變換得到視為相同的著色方式。總共有多少種不同的著色方式？
+  #grid(
+    columns: (1fr,1fr),
+    rows: (auto),
+    align: center,
+    cetz.canvas(length: 3em,{
+      import cetz.draw:*
+      ortho(x:20deg,y:45deg,z:0deg,{
+        
+        on-xy(z:-1,{
+          rect((-1,-1),(1,1),fill: rgb("e8e8f8"))
+        })
+        on-xy(z:1,{
+          rect((-1,-1),(1,1),fill: rgb(silver))
+        })
+        on-yz(x:-1,{
+          rect((-1,-1),(1,1))
+        })
+        on-yz(x:1,{
+          rect((-1,-1),(1,1))
+        })
+        on-xz(y:-1,{
+          rect((-1,-1),(1,1))
+        })
+        on-xz(y:1,{
+          rect((-1,-1),(1,1))
+        })
+        // line((0,0,0),(2,0,0),stroke: red)
+        // line((0,0,0),(0,2,0),stroke: green)
+        // line((0,0,0),(0,0,2),stroke: blue)
+      })
+    }),
+    cetz.canvas(length: 3em,{
+      import cetz.draw:*
+      rect((0,0),(1,1),name: "1")
+      rect((1,0),(2,1))
+      rect((2,0),(3,1))
+      rect((3,0),(4,1))
+      rect((1,1),(2,2))
+      rect((1,0),(2,-1))
+      content((0.5,0.5),[*1*])
+      content((1.5,0.5),[*2*])
+      content((2.5,0.5),[*3*])
+      content((3.5,0.5),[*4*])
+      content((1.5,1.5),[*5*])
+      content((1.5,-0.5),[*6*])
+      
+    })
+  )
+]
+#slide[
+  #let mg = $m_g$
+  #set text(size: 21pt)
+  我們讓$G = D_6$是正六面體的對稱群，$X$是所有著色的結果($abs(X) = n^6$)，我們知道$abs(G) = 24$
+  
+  #pause
+  #v(3em)
+  + 單位變換:$(1)(2)(3)(4)(5)(6)$
+  + 固定兩對面然會旋轉$90degree,270degree$，如:$(1,2,3,4)(5)(6)$，共 6 個。
+  + 固定兩對面然會旋轉$180degree$，如:$(1,3)(2,4)(5)(6)$，共 3 個。
+  + 固定兩對邊旋轉$180degree$，如:$(1,5)(3,6)(2,4)$，共 6 個。
+  + 固定兩個對頂點旋轉$120degree,240degree$，如:$(1,5,4)(2,3,6)$，共 8 個
+]
+#slide[
+  #set text(size: 21pt)
+  所以我們有
+  $
+    r &= 1/24 (n^6 + 6n^3 + 3n^4 + 6n^3 + 8n^2) \
+    r &= 1/24 (n^6 + 3n^4 + 12n^3 + 8n^2)
+  $
 ]
