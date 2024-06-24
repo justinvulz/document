@@ -8,10 +8,7 @@
 
 #import themes.university: *
 #show :show-fakebold
-#show text.where(style:"italic"): t =>[
-  // #regex-fakeitalic(reg-exp: "[\p{script=Han}]",t)
-dsadaaaaaaaaaaaaaaaaaaaaaaaaa
-]
+
 
 #let uncv = uncover
 #set list(marker: listal)
@@ -106,8 +103,7 @@ dsadaaaaaaaaaaaaaaaaaaaaaaaaa
       除了數學上的應用外，在其他領域也有著廣泛的應用，例如
     ],colspan: 2),
     grid.cell([
-      - 密碼學
-      - 「李群」在近代物理中有重要作用
+      - 密碼學 (RSA加密算法)
       - 標準粒子模型中的對稱性]),
     grid.cell([#pause#image("pic/standard_model.png")],rowspan: 2)
   )
@@ -128,14 +124,28 @@ dsadaaaaaaaaaaaaaaaaaaaaaaaaa
   ]
 ]
 #slide[
+  #set table(stroke: (x,y) =>(
+    bottom: if y==0  {1pt},
+    right: if x==0 {1pt},
+  ))
   #set text(size: 24pt)
   Example:
   - 整數集合 $ZZ$ 與加法運算 $+$ 構成一個群。 $angle.l ZZ,+ angle.r$\
     單位元素為 $0$，反元素為 $-a$。
   - 整數集合 $ZZ$ 與乘法運算 $*$ 不是一個群。\
     乘法在整數裡沒有反元素。
-  - $ZZ_4 = {0,1,2,3}$ 與加法運算 $+_4$ 構成一個群。\
-    其中 $+_4$ 定義為 $a +_4 b = (a+b) mod 4$。
+  - $angle.l QQ, + angle.r$,$angle.l RR, + angle.r$ 是群。
+  - $C_3 = {e,a,b}$ 與下面的運算是一個群。 #table(
+    columns: (2em,2em,2em,2em),
+    rows: auto,
+    align: center,
+    $cir$, $e$, $a$, $b$,
+    $e$, $e$, $a$, $b$,
+    $a$, $a$, $b$, $e$,
+    $b$, $b$, $e$, $a$
+  
+  ) 
+  
 ]
 #slide[
   #set text(size: 19pt)
@@ -149,7 +159,7 @@ dsadaaaaaaaaaaaaaaaaaaaaaaaaa
   #pause
   Example:
   - 整數集合 $ZZ$ 與加法運算 $+$ 是一個交換群。
-  - $ZZ_4$ 的 order 為 $4$。
+  - $C_3$ 的 order 為 $3$。
   - 可逆矩陣的集合與矩陣乘法是一個群，但不是交換群。
 ]
 #let slide = slide.with(title: "群的基礎性質")
@@ -164,7 +174,7 @@ dsadaaaaaaaaaaaaaaaaaaaaaaaaa
   #proof[
     讓$G$是一個群，$a,b,c in G$。假設$a*b = a*c$。
     #uncv("3-")[
-      因為$a in G$，所以$a$的反元素$a^(-1)$存在，且$a*a^(-1) = e$。
+      因為$a in G$，所以$a$的反元素$a^(-1)$存在，且$a*a^(-1) = a^(-1)*a = e$。
     ]
     $
       &a*b = a*c \
@@ -218,6 +228,7 @@ dsadaaaaaaaaaaaaaaaaaaaaaaaaa
       (a b)^(-1) = b^(-1) a^(-1)
     $
   ]
+  我們有時候會省略運算符號，寫成$a b$代表$a*b$。
   #pause
   #proof[
     我們直接相乘
@@ -244,30 +255,40 @@ dsadaaaaaaaaaaaaaaaaaaaaaaaaa
   $
   #pause
   #pause
-  #grid(
-    columns: (1fr,1fr),
-    rows: (auto),
-    align: center,
-    [#figure(
-      $
-        1 -> 3\
-        2 -> 4\
-        3 -> 5\
-        4 -> 2\
-        5 -> 1
-      $,
-      caption: [$sigma$],
-    ) <fig1>],
-    [#figure(
-      $
-        1 -> 2\
-        2 -> 3\
-        3 -> 2\
-        4 -> 5\
-        5 -> 1\
-      $,
-    )<fig2>]
-  )
+  #figure(
+    $
+      1 -> 3\
+      2 -> 4\
+      3 -> 5\
+      4 -> 2\
+      5 -> 1
+    $,
+    caption: [$sigma$],
+  ) <fig1>
+  // #grid(
+  //   columns: (1fr,1fr),
+  //   rows: (auto),
+  //   align: center,
+  //   [#figure(
+  //     $
+  //       1 -> 3\
+  //       2 -> 4\
+  //       3 -> 5\
+  //       4 -> 2\
+  //       5 -> 1
+  //     $,
+  //     caption: [$sigma$],
+  //   ) <fig1>],
+  //   [#figure(
+  //     $
+  //       1 -> 2\
+  //       2 -> 3\
+  //       3 -> 2\
+  //       4 -> 5\
+  //       5 -> 1\
+  //     $,
+  //   )<fig2>]
+  // )
 ]
 
 #slide(title:"置換")[
@@ -375,27 +396,10 @@ dsadaaaaaaaaaaaaaaaaaaaaaaaaa
     })
   ]
 ]
-#slide(title: "置換群")[
-  #set text(size: 19pt)
-  #definition(number:"2.2")[
-    一個集合$A$的所有置換構成一個_群_，稱為$A$的*置換群*，記為$S_A$。
-  ]
-  #pause
-  #set text(size: 25pt)
-  #remark[
-    $n$個元素的集合的置換群計為$S_n$的order為$n!$。
-  ]
-  #pause
-  #example[
-    \
-    上述的例子中，$tau$和$sigma$是$S_5$的元素。\
-    $S_5$的order為$5! = 120$。
-  ]
-]
 #slide(title: "循環表示法(Cycle)")[
   $ sigma = mat(1, 2, 3, 4, 5; 3, 4, 5, 2, 1) $
   #pause
-  #v(2em)
+  #v(1em)
   #only(2)[
     #grid(
       columns: (1fr,1fr),
@@ -484,83 +488,49 @@ dsadaaaaaaaaaaaaaaaaaaaaaaaaa
       sigma = (1,3,5)(2,4)
     $
   ]
+  #v(-1em)
+  #uncv("6-")[
+    $
+      tau = (1,2,3,4,5)
+    $
+  ]
 ]
+#slide(title: "置換群")[
+  #set text(size: 19pt)
+  #definition(number:"2.2")[
+    一個集合$A$的所有置換構成一個_群_，稱為$A$的*置換群*，記為$S_A$。
+  ]
+  #pause
+  我們驗證$S_A$確實是一個群。 (單位元素、結合律、反元素)
+  #pause
+  #set text(size: 19pt)
+  #remark[
+    $n$個元素的集合的置換群計為$S_n$的order為$n!$。
+  ]
+  #pause
+  #example[
+    \
+    上述的例子中，$tau$和$sigma$是$S_5$的元素。\
+    $S_5$的order為$5! = 120$。
+    並且$sigma$和$tau$的反元素
+    $ sigma^(-1) = (5,3,1)(2,4) \ 
+     tau^(-1) = (5,4,3,2,1) $
+  ]
+]
+
 
 #new-section-slide("空間對稱群",subtitle:"Symmetry Group")
 #let (p1,p2,p3) = ((0,0),(1,0),(0.5,-0.866))
 
 #slide(title:"對稱群")[
   #set figure(supplement: none)
-  我們接下來考慮一種特殊的置換群。\
-  #pause
-  #grid(
-    columns: (1fr,1fr,1fr),
-    rows: (auto),
-    align: center,
-    uncv("2-")[#figure(
-      diagram(
-        {
-          node(p1,[*1*])
-          node(p2,[*2*])
-          node(p3,[*3*])
-          edge(p1,p2,"-")
-          edge(p2,p3,"-")
-          edge(p3,p1,"-")
-        }
-      ),
-      caption: "正三角形", 
-    )],
-    uncv("3-")[#figure(
-      diagram({
-        node(p1,[*2*])
-        node(p2,[*3*])
-        node(p3,[*1*])
-        edge(p1,p2,"-")
-        edge(p2,p3,"-")
-        edge(p3,p1,"-")
+  我們接下來考慮一個正三角形，他有那些對稱性？
 
-      }),
-      caption: [順時針旋轉 $120$ 度],
-    )],
-    uncv("4-")[#figure(
-      diagram({
-        node(p1,[*1*])
-        node(p2,[*3*])
-        node(p3,[*2*])
-        edge(p1,p2,"-")
-        edge(p2,p3,"-")
-        edge(p3,p1,"-")
-        let mid = ((p2.at(0)+p3.at(0))/1.9,(p2.at(1)+p3.at(1))/1.9)
-        edge((0,0),mid,stroke: red)
-      }),
-      caption: [沿某一軸鏡射],
-    )]
-  ) 
-  #grid(
-    columns: (1fr,1fr),
-    rows: (100pt),
-    align: center+horizon,
-    uncv("3-")[$rho_1 = mat(1,2,3; 2,3,1) = (1,2,3)$],
-    uncv("4-")[$tau_1 = mat(1,2,3; 1,3,2) = (1)(2,3)$]
-  )
-  #uncv("5-")[
-    我們稱這些置換為*對稱置換*。
-  ]
 ]
-#slide(title:"對稱群")[
-  #set figure(supplement: none)
-  // #set text(size: 25pt)
+#slide[
   #grid(
-    columns: (1fr,1fr),
-    rows: (20%),
-    align: center+horizon,
-    $rho_1 = mat(1,2,3; 2,3,1) = (1,2,3)$,
-    $tau_1 = mat(1,2,3; 1,3,2) = (1)(2,3)$
-  )
-  #set text(size: 20pt)
-  #grid(
-    columns: (1fr,1fr,1fr),
-    rows: (auto),
+    columns :(1fr,1fr,1fr),
+    rows: (1fr,1fr),
     align: center,
     [#figure(
       diagram(
@@ -573,7 +543,6 @@ dsadaaaaaaaaaaaaaaaaaaaaaaaaa
           edge(p3,p1,"-")
         }
       ),
-      caption: "正三角形", 
     )],
     [#figure(
       diagram({
@@ -585,7 +554,18 @@ dsadaaaaaaaaaaaaaaaaaaaaaaaaa
         edge(p3,p1,"-")
 
       }),
-      caption: [$rho_1$],
+    )],
+    [#figure(
+      diagram(
+        {
+          node(p1,[*3*])
+          node(p2,[*1*])
+          node(p3,[*2*])
+          edge(p1,p2,"-")
+          edge(p2,p3,"-")
+          edge(p3,p1,"-")
+        }
+      ),
     )],
     [#figure(
       diagram({
@@ -597,67 +577,125 @@ dsadaaaaaaaaaaaaaaaaaaaaaaaaa
         edge(p3,p1,"-")
         edge(p3,(0.5,0.1),stroke: red)
       }),
-      caption: [$tau_1 cir rho_1$],
-    )]
-  )
-  #set text(size: 25pt)
-  #align(center)[
-    $
-      tau_1 cir rho_1 &= mat(1,2,3;1,3,2) mat(1,2,3;2,3,1) 
-      &= mat(1,2,3;3,1,2) 
-      &= (1,3,2)
-    $
-  ]
-  #pause
-  對稱置換的#underline("合成")還是一個對稱置換。
-]
-#slide(title:[$D_3$])[
-  我們把三角形的所有對稱的置換枚舉出來：
-  #set text(size: 21pt)
-  $
-    e = rho_0 &= (1)(2)(3)  & textr("不動")\
-    rho_1 &= (1,2,3) & textr("旋轉 120 度") \
-    rho_2 &= (1,3,2) & textr("旋轉 240 度") \
-    tau_1 &= (1)(2,3) & textr("鏡射") \
-    tau_2 &= (1,3,2) & textr("鏡射") \
-    tau_3 &= (1,2)(3) & textr("鏡射") \
-  $
-  #pause
-  #set text(size: 25pt)
-  把上述的對稱置換構成的群稱為$D_3$，稱為*正三角形的空間對稱群*。
-]
-#slide(title:[$D_3$])[
-  $
-    D_3 = {e, rho_1, rho_2, tau_1, tau_2, tau_3} 
-  $
-  #set table(stroke: (x,y) =>(
-    bottom: if y==0  {1pt},
-    right: if x==0 {1pt},
-  ))
-  #figure(
-    table(
-      align: center,
-      columns: (2em,2em,2em,2em,2em,2em,2em),
-      $cir$, $e$, $rho_1$, $rho_2$, $tau_1$, $tau_2$, $tau_3$,
-      $e$, $e$, $rho_1$, $rho_2$, $tau_1$, $tau_2$, $tau_3$,
-      $rho_1$, $rho_1$, $rho_2$, $e$, $tau_3$, $tau_1$, $tau_2$,
-      $rho_2$, $rho_2$, $e$, $rho_1$, $tau_2$, $tau_3$, $tau_1$,
-      $tau_1$, $tau_1$, $tau_3$, $tau_2$, $e$, $rho_2$, $rho_1$,
-      $tau_2$, $tau_2$, $tau_1$, $tau_3$, $rho_2$, $e$, $rho_1$,
-      $tau_3$, $tau_3$, $tau_2$, $tau_1$, $rho_1$, $rho_2$, $e$
-    )
+    )],
+    [#figure(
+      diagram({
+        node(p1,[*3*])
+        node(p2,[*2*])
+        node(p3,[*1*])
+        edge(p1,p2,"-")
+        edge(p2,p3,"-")
+        edge(p3,p1,"-")
+        let mid = ((p3.at(0)+p1.at(0))/1.9,(p3.at(1)+p1.at(1))/1.9)
+        edge(p2,mid,stroke: red)
+      }),
+    )],
+    [#figure(
+      diagram({
+        node(p1,[*1*])
+        node(p2,[*3*])
+        node(p3,[*2*])
+        edge(p1,p2,"-")
+        edge(p2,p3,"-")
+        edge(p3,p1,"-")
+        let mid = ((p3.at(0)+p2.at(0))/1.9,(p3.at(1)+p2.at(1))/1.9)
+        edge(p1,mid,stroke: red)
+      }),
+    )],
+
   )
 ]
+#slide[
+  #set figure(supplement: none)
+  #grid(
+    columns :(1fr,1fr,1fr),
+    rows: (1fr,1fr),
+    align: center,
+    [#figure(
+      diagram(
+        {
+          node(p1,[*1*])
+          node(p2,[*2*])
+          node(p3,[*3*])
+          edge(p1,p2,"-")
+          edge(p2,p3,"-")
+          edge(p3,p1,"-")
+        }
+      ),caption:[$mat(1,2,3;1,2,3) = e$]
+    )],
+    [#figure(
+      diagram({
+        node(p1,[*2*])
+        node(p2,[*3*])
+        node(p3,[*1*])
+        edge(p1,p2,"-")
+        edge(p2,p3,"-")
+        edge(p3,p1,"-")
+
+      }),caption:[$mat(1,2,3;2,3,1) = (1,2,3)$]
+    )],
+    [#figure(
+      diagram(
+        {
+          node(p1,[*3*])
+          node(p2,[*1*])
+          node(p3,[*2*])
+          edge(p1,p2,"-")
+          edge(p2,p3,"-")
+          edge(p3,p1,"-")
+        }
+      ),caption:[$mat(1,2,3;3,1,2) = (3,2,1)$]
+    )],
+    [#figure(
+      diagram({
+        node(p1,[*2*])
+        node(p2,[*1*])
+        node(p3,[*3*])
+        edge(p1,p2,"-")
+        edge(p2,p3,"-")
+        edge(p3,p1,"-")
+        edge(p3,(0.5,0.1),stroke: red)
+      }),caption:[$mat(1,2,3;2,1,3) = (1,2)(3)$]
+    )],
+    [#figure(
+      diagram({
+        node(p1,[*3*])
+        node(p2,[*2*])
+        node(p3,[*1*])
+        edge(p1,p2,"-")
+        edge(p2,p3,"-")
+        edge(p3,p1,"-")
+        let mid = ((p3.at(0)+p1.at(0))/1.9,(p3.at(1)+p1.at(1))/1.9)
+        edge(p2,mid,stroke: red)
+      }),caption:[$mat(1,2,3;3,2,1) = (1,3)(2)$]
+    )],
+    [#figure(
+      diagram({
+        node(p1,[*1*])
+        node(p2,[*3*])
+        node(p3,[*2*])
+        edge(p1,p2,"-")
+        edge(p2,p3,"-")
+        edge(p3,p1,"-")
+        let mid = ((p3.at(0)+p2.at(0))/1.9,(p3.at(1)+p2.at(1))/1.9)
+        edge(p1,mid,stroke: red)
+      }),caption:[$mat(1,2,3;1,3,2) = (3,2)(1)$]      
+    )],
+  )
+]
+#slide(title:[$D_3$])[
+  把上面正三角形的對稱性的置換收集起來，我們得到一個群，稱為正三角形的*對稱群*$D_3$。
+
+  那$D_3$的order是多少？只有$6$個嗎？
+]
+
 #slide(title:[$D_4$])[
 
   #grid(
     columns: (1fr,1fr),
-    rows: (auto),
+    rows: (auto,auto),
     align: center,
     [
-      $
-        D_4 = {e, rho_1, rho_2, rho_3, tau_1, tau_2, tau_3, tau_4}
-      $
       #v(20%)
       #figure(
         diagram({
@@ -685,6 +723,7 @@ dsadaaaaaaaaaaaaaaaaaaaaaaaaa
       )
     ],
     [
+      #set text(size: 21pt)
       $
         e &= (1)(2)(3)(4) \
         rho_1 &= (1,2,3,4)\
@@ -695,59 +734,60 @@ dsadaaaaaaaaaaaaaaaaaaaaaaaaa
         tau_3 &= (1,2)(4,3)\
         tau_4 &= (1,4)(2,3)\
       $
-    ]
+    ],
+    [#pause 那$D_4$的order是多少？ \ 只有$8$個嗎？]
   )
 ]
-#slide(title:[$D_4$])[
-  #set figure(supplement: none)
+// #slide(title:[$D_4$])[
+//   #set figure(supplement: none)
 
-  值得注意的是 $sigma = (1,2)(4)(3)$ 他是一個置換，但不是一個對稱置換，因為他不能把正方形打回自身。
-  #v(20%)
-  #let (p1,p2,p3,p4) = ((0,0),(1,0),(1,1),(0,1))
-  #grid(
-    columns: (1fr,1fr,1fr),
-    rows: (auto),
-    figure(
-      diagram({
-        node(p1,[*1*])
-        node(p2,[*2*])
-        node(p3,[*3*])
-        node(p4,[*4*])
-        edge(p1,p2,"-")
-        edge(p2,p3,"-")
-        edge(p3,p4,"-")
-        edge(p4,p1,"-")
-      }),
-      caption: "正方形"
-    ),
-    figure(
-      diagram({
-        node(p1,[*3*])
-        node(p2,[*4*])
-        node(p3,[*1*])
-        node(p4,[*2*])
-        edge(p1,p2,"-")
-        edge(p2,p3,"-")
-        edge(p3,p4,"-")
-        edge(p4,p1,"-")
-      }),
-      caption: [$rho_2$]
-    ),
-    figure(
-      diagram({
-        node(p1,[*2*])
-        node(p2,[*1*])
-        node(p3,[*3*])
-        node(p4,[*4*])
-        edge(p1,p2,"-")
-        edge(p2,p4,"-")
-        edge(p3,p4,"-")
-        edge(p3,p1,"-")
-      }),
-      caption: [$sigma$ 不是一個對稱置換]
-    )
-  ) 
-]
+//   值得注意的是 $sigma = (1,2)(4)(3)$ 他是一個置換，但不是一個對稱置換，因為他不能把正方形打回自身。
+//   #v(20%)
+//   #let (p1,p2,p3,p4) = ((0,0),(1,0),(1,1),(0,1))
+//   #grid(
+//     columns: (1fr,1fr,1fr),
+//     rows: (auto),
+//     figure(
+//       diagram({
+//         node(p1,[*1*])
+//         node(p2,[*2*])
+//         node(p3,[*3*])
+//         node(p4,[*4*])
+//         edge(p1,p2,"-")
+//         edge(p2,p3,"-")
+//         edge(p3,p4,"-")
+//         edge(p4,p1,"-")
+//       }),
+//       caption: "正方形"
+//     ),
+//     figure(
+//       diagram({
+//         node(p1,[*3*])
+//         node(p2,[*4*])
+//         node(p3,[*1*])
+//         node(p4,[*2*])
+//         edge(p1,p2,"-")
+//         edge(p2,p3,"-")
+//         edge(p3,p4,"-")
+//         edge(p4,p1,"-")
+//       }),
+//       caption: [$rho_2$]
+//     ),
+//     figure(
+//       diagram({
+//         node(p1,[*2*])
+//         node(p2,[*1*])
+//         node(p3,[*3*])
+//         node(p4,[*4*])
+//         edge(p1,p2,"-")
+//         edge(p2,p4,"-")
+//         edge(p3,p4,"-")
+//         edge(p3,p1,"-")
+//       }),
+//       caption: [$sigma$ 不是一個對稱置換]
+//     )
+//   ) 
+// ]
 #slide(title: "如何計算空間對稱群")[
   正$n$邊形的對稱群的order是#only("1")[多少?]#only("2")[ $2n$]。\
   立方體的有#only("1")[多少]#only("2")[$24$個]不同的旋轉。
@@ -783,14 +823,76 @@ dsadaaaaaaaaaaaaaaaaaaaaaaaaa
   #set text(size: 19pt)
 
   #definition(number:"4.1")[
-    一個群$G$對一個集合$A$的*作用*是一個映射 $* : G times A -> A$，滿足以下條件：
+    一個群$angle.l G,* angle.r$對一個集合$A$的*作用*是一個映射 $phi : G times A -> A$，滿足以下條件：
     #set enum(numbering: al("1."))
-    + 對於所有 $a in A quad e a = a$
-    + 對於所有 $a in A$ 和 $g,h in G$，$(g h)a = g(h a)$
+    + 對於所有 $a in A quad phi(e,a) = a$
+    + 對於所有 $a in A$ 和 $g,h in G$，$phi(g*h,a) = phi(g,phi(h,a))$
 
     在這個情況下，我們稱$A$是一個#gset。
   ]
+  為了簡化，我們有時候會省略運算符號，寫成$g a$代表$phi(g,a)$。
+  所以上述的條件可以寫成
+  $
+    e a = a \
+    (g h) a = g (h a)
+  $
   像是在上一章節中，我們考慮了對稱群$D_3$對正三角形的作用。
+]
+#slide(title:"Example")[
+  $rho_1 = (1,2,3) in D_3$
+  #grid(
+    columns: (auto,auto,auto,auto),
+    column-gutter: 1em,
+    rows: (auto),
+    align: center+horizon,
+    $rho_1$,
+    diagram(
+    { 
+      node(p1,[*1*])
+      node(p2,[*2*])
+      node(p3,[*3*])
+      edge(p1,p2,"-")
+      edge(p2,p3,"-")
+      edge(p3,p1,"-")
+    }),
+    $=$,
+    diagram(
+    {
+      node(p1,[*2*])
+      node(p2,[*3*])
+      node(p3,[*1*])
+      edge(p1,p2,"-")
+      edge(p2,p3,"-")
+      edge(p3,p1,"-")
+    })
+  )
+  $tau = (1)(2,3) in D_3$
+  #grid(
+    columns: (auto,auto,auto,auto),
+    column-gutter: 1em,
+    rows: (auto),
+    align: center+horizon,
+    $tau$,
+    diagram(
+    { 
+      node(p1,[*1*])
+      node(p2,[*2*])
+      node(p3,[*3*])
+      edge(p1,p2,"-")
+      edge(p2,p3,"-")
+      edge(p3,p1,"-")
+    }),
+    $=$,
+    diagram(
+    {
+      node(p1,[*1*])
+      node(p2,[*3*])
+      node(p3,[*2*])
+      edge(p1,p2,"-")
+      edge(p2,p3,"-")
+      edge(p3,p1,"-")
+    })
+  )
 ]
 #slide(title:"作用群")[
   #set text(size: 19pt)
@@ -804,9 +906,33 @@ dsadaaaaaaaaaaaaaaaaaaaaaaaaa
     如果$x != y$，那$g x != g y$
   ]
 ]
+#slide(title: "軌道 Orbits")[
+  #set text(size: 19.5pt)
+  #theorem(number:"4.2")[
+    讓$X$是一個#gset，我們定義一個在$X$上的關係$tilde.op$，對於所有的$x,y in X$，$x tilde.op y$當且僅當存在$g in G$，使得$g x = y$。這個關係是一個等價關係。
+  ] <relation>
+  #pause
+  #proof[
+    自反性、對稱性、傳遞性
+    #uncv("3-")[\ *自反性*：對於所有的$x in X$，$x tilde.op x$，因為$e x = x$。]
+    
+    #uncv("4-")[\ *對稱性*：如果$x tilde.op y$，那麼存在$g in G$，使得$g x = y$，所以$g^(-1) y = x$，所以$y tilde.op x$。]
+    
+    #uncv("5-")[\ *傳遞性*：如果$x tilde.op y$且$y tilde.op z$，那麼存在$g,h in G$，使得$g x = y$且$h y = z$，所以$h g x = z$，所以$x tilde.op z$。]
+  ] 
+]
+#slide(title: "軌道 Orbits")[
+  #set text(size: 19pt)
+  #definition(number:"4.3")[
+    讓$X$是一個#gset，每一個在 Therorem 4.2 下的等價類稱為一個*軌道*。如果$x in X$，包含$x$的分割是$x$的軌道，記作$G_x$。
+  ]
+  #theorem(number:"4.3")[
+    讓 $X$ 是一個 #gset，$x in X$，那麼 $x$ 的軌道 $G_x = {g x mid(|) g in G}$。
+  ]
+]
 #let Stab = math.op("Stab")
-#slide(title: "不動點、穩定子群、軌道")[
-  *Fixed point, Stabilizers subgroup, Orbits*
+#slide(title: "不動點、穩定子群")[
+  *Fixed point, Stabilizers subgroup *
   #set text(size: 19pt)
 
   #definition(number: "4.2")[
@@ -822,30 +948,7 @@ dsadaaaaaaaaaaaaaaaaaaaaaaaaa
   - $X^e = X$
   
 ]
-#slide(title: "軌道")[
-  #set text(size: 19.5pt)
-  #theorem(number:"4.2")[
-    讓$X$是一個#gset，我們定義一個在$X$上的關係$tilde.op$，對於所有的$x,y in X$，$x tilde.op y$當且僅當存在$g in G$，使得$g x = y$。這個關係是一個等價關係。
-  ] <relation>
-  #pause
-  #proof[
-    自反性、對稱性、傳遞性
-    #uncv("3-")[\ *自反性*：對於所有的$x in X$，$x tilde.op x$，因為$e x = x$。]
-    
-    #uncv("4-")[\ *對稱性*：如果$x tilde.op y$，那麼存在$g in G$，使得$g x = y$，所以$g^(-1) y = x$，所以$y tilde.op x$。]
-    
-    #uncv("5-")[\ *傳遞性*：如果$x tilde.op y$且$y tilde.op z$，那麼存在$g,h in G$，使得$g x = y$且$h y = z$，所以$h g x = z$，所以$x tilde.op z$。]
-  ] 
-]
-#slide(title: "軌道")[
-  #set text(size: 19pt)
-  #definition(number:"4.3")[
-    讓$X$是一個#gset，每一個在 Therorem 4.2 下的等價類稱為一個*軌道*。如果$x in X$，包含$x$的分割是$x$的軌道，記作$G_x$。
-  ]
-  #theorem(number:"4.3")[
-    讓 $X$ 是一個 #gset，$x in X$，那麼 $x$ 的軌道 $G_x = {g x mid(|) g in G}$。
-  ]
-]
+
 #slide(title: "軌道-穩定子定理")[
   #set text(size: 20pt)
   #theorem([軌道-穩定子定理 (Orbit-Stabilizer Theorem)],number:"4.4")[
