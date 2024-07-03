@@ -94,10 +94,17 @@
 #definition[
   讓$G$是一個群，定義$abs(G)$是$G$的元素個數，稱為$G$的*order*。
 ]
+
 #definition[
   一個群$G$如果滿足交換率i.e. 對於所有的$a,b in G$，$ a*b = b*a $，則稱$G$是一個*交換群*(Abelian groups)。
 ]
+#example[
+  - $C_3$的order是$3$。
+  - $ZZ$ 是一個交換群。
+  - 可逆矩陣的集合與矩陣乘法是一個群，但不是交換群。
 
+  
+]
 
 == 群的性質
 #theorem[
