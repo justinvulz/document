@@ -467,7 +467,7 @@ $
   }),
   caption: "正方形的對稱性"
 )<refq>
-其中$tau_1 dots tau_4$是以@refq 中的對稱軸鏡射，$rho_1 dots rho_3$是以對角線為軸的對稱操作。我們可以把他們用循環寫下來：
+其中$tau_1 dots tau_4$是以@refq 中的對稱軸鏡射，$rho_1 dots rho_3$是以中點為圓心的旋轉。我們可以把他們用循環寫下來：
 $
   e &= (1)(2)(3)(4) \
   rho_1 &= (1,2,3,4)\
@@ -559,10 +559,9 @@ $
     &<==> exists tilde(g) in Stab_G (x) st g = h tilde(g)\
     &<==> g in {h tilde(g) | tilde(g) in Stab_G (x)}
   $
-  這裡可以很清楚的看到，對於所有$tilde(g) in Stab_G(x)$，$f(h tilde(g)) = h tilde(g) = h x =y $。
+  所以，$f(g) = y <==> g in {h tilde(g) | tilde(g) in Stab_G (x)}$，並且，對於所有$tilde(g) in Stab_G(x)$，$f(h tilde(g)) = h tilde(g) = h x =y $。
   
-  所以，$f(g) = y <==> g in {h tilde(g) | tilde(g) in Stab_G (x)}$。因此，每個$y in G_x$ 都 $abs(Stab_G (x))$ 個 $g in G$ 使得 $f(g) = y$。\
-  所以，$abs(G) = abs(G_x) abs(Stab_G (x))$。
+  因此，每個$y in G_x$ 都 $abs(Stab_G (x))$ 個 $g in G$ 使得 $f(g) = y$。所以，$abs(G) = abs(G_x) abs(Stab_G (x))$。
 
 ]
 // #pagebreak()
@@ -640,7 +639,7 @@ $
   #let mg = $m_g$
   我們考慮有$n$個顏色，對一個正四邊形的頂點上色，我們要求在對稱性下有幾種不同的著色方法。
   我們讓$G = D_4$是正四邊形的對稱群，$X$是所有著色的結果($abs(X) = n^4$)，所以我們要求$X$在$G$下有幾個軌道。根據前的討論，我們知道$abs(G) = 8$，然後我們計算不動點的個數：
-  - 單位變換 $mg = 4$
+  - $1$個 $4$ cycle的單位變換，$e = (1)(2)(3)(4)$
   - $2$個 $1$ cycle的旋轉($90 degree, 270 degree$)，e.x. $g = (1,2,3,4)$   
   - $1$個 $2$ cycle的旋轉($180 degree$)，e.x. $g = (1,2)(3,4)$  
   - $2$個 $3$ cycle的鏡射(對角線的鏡射)，e.x. $g = (1)(3)(2,4)$ 
