@@ -495,12 +495,10 @@ $
  + 對於所有 $a in A$ 和 $g,h in G$，$phi(g*h,a) = phi(g,phi(h,a))$
  在這個情況下，我們稱$A$是一個#gset。
 ]
-為了簡化，我們有時候會省略運算符號，寫成$g a$代表$phi(g,a)$。
+為了簡化，我們會省略運算函數，寫成$g a$代表$phi(g,a)$。
 所以上述的條件可以寫成
-$
-  e a = a \
-  (g h) a = g (h a)
-$
++ 對於所有 $a in A quad e a = a$
++ 對於所有 $a in A$ 和 $g,h in G$，$(g h) a = g (h a)$
 #theorem[
   讓$X$是一個#gset。如果$g x_1 = g x_2$，那$x_1 = x_2$
 ]
