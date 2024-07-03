@@ -489,14 +489,18 @@ $
 #let gset = $G negspace textb("-set")$
 
 #definition[
-  一個群$G$對一個集合$A$的*作用*是一個映射 $* : G times A -> A$，滿足以下條件：
-  #set enum(numbering: al("1."))
-  + 對於所有 $a in A quad e a = a$
-  + 對於所有 $a in A$ 和 $g,h in G$，$(g h)a = g(h a)$
-
-  在這個情況下，我們稱$A$是一個#gset。
+ 一個群$angle.l G,* angle.r$對一個集合$A$的*作用*是一個映射 $phi : G times A -> A$，滿足以下條件：
+ #set enum(numbering: al("1."))
+ + 對於所有 $a in A quad phi(e,a) = a$
+ + 對於所有 $a in A$ 和 $g,h in G$，$phi(g*h,a) = phi(g,phi(h,a))$
+ 在這個情況下，我們稱$A$是一個#gset。
 ]
-
+為了簡化，我們有時候會省略運算符號，寫成$g a$代表$phi(g,a)$。
+所以上述的條件可以寫成
+$
+  e a = a \
+  (g h) a = g (h a)
+$
 #theorem[
   讓$X$是一個#gset。如果$g x_1 = g x_2$，那$x_1 = x_2$
 ]
