@@ -559,7 +559,7 @@ $
   所以，$abs(G) = abs(G_x) abs(Stab_G (x))$。
 
 ]
-#pagebreak()
+// #pagebreak()
 == 伯恩賽德引理 (Burnside’s Lemma)
 #theorem([*伯恩賽德引理*])[
   讓$G$是一個有限群，讓$X$是一個#gset。讓$r$是$X$的軌道數，那麼
