@@ -168,7 +168,7 @@
   #theorem(number:"1.1")[
     如果$G$是一個群，那*消去率*成立，即對於所有的$a,b,c in G$，
     $ a*b = a*c => b = c \
-       b*a = b*c => b = c $
+       b*a = c*a => b = c $
   ]
   #pause
   #proof[
@@ -228,17 +228,19 @@
       (a b)^(-1) = b^(-1) a^(-1)
     $
   ]
-  我們有時候會省略運算符號，寫成$a b$代表$a*b$。
-  #pause
-  #proof[
-    我們直接相乘
-    $
-        (a b)b^(-1) a^(-1) &= a (b b^(-1)) a^(-1) \
-                           &= a e a^(-1)\
-                         &= a a^(-1)\
-                         &= e
-    $
-    根據反元素的定義，$(a b)^(-1) = b^(-1) a^(-1)$
+  #only("1")[我們有時候會省略運算符號，寫成$a b$代表$a*b$。]
+  #only("2-")[
+    #proof[
+      我們直接相乘
+      $
+          (a b)b^(-1) a^(-1) &= a (b b^(-1)) a^(-1) \
+                            &= a e a^(-1)\
+                          &= a a^(-1)\
+                          &= e
+      $
+      根據反元素的定義，$(a b)^(-1) = b^(-1) a^(-1)$
+    ]
+    我們只證明了$(a b)^(-1)b^(-1) a^(-1) =e$，但是$b^(-1) a^(-1)(a b)^(-1) =e$也是成立的。
   ]
 ]
 #let slide = slide.with(title: none)
@@ -265,30 +267,6 @@
     $,
     caption: [$sigma$],
   ) <fig1>
-  // #grid(
-  //   columns: (1fr,1fr),
-  //   rows: (auto),
-  //   align: center,
-  //   [#figure(
-  //     $
-  //       1 -> 3\
-  //       2 -> 4\
-  //       3 -> 5\
-  //       4 -> 2\
-  //       5 -> 1
-  //     $,
-  //     caption: [$sigma$],
-  //   ) <fig1>],
-  //   [#figure(
-  //     $
-  //       1 -> 2\
-  //       2 -> 3\
-  //       3 -> 2\
-  //       4 -> 5\
-  //       5 -> 1\
-  //     $,
-  //   )<fig2>]
-  // )
 ]
 
 #slide(title:"置換")[
@@ -454,6 +432,51 @@
       )
     )
   ]
+  #only("4-")[
+    #grid(
+      columns: (1fr,1fr),
+      rows: (auto),
+      align: center,
+      diagram(
+        {
+          // traingle
+          let (p1,p3,p5) = ((0,0),(1,0),(0.5,0.866))
+          node(p1,[*1*])
+          node(p3,[*3*])
+          node(p5,[*5*])
+          edge(p1,p3,"->",bend: 55deg)
+          edge(p3,p5,"->",bend: 55deg)
+          edge(p5,p1,"->",bend: 55deg) 
+        }
+      ),
+      diagram(
+        {
+          // traingle
+          let (p2,p4) = ((0,0),(1,0))
+          node(p2,[*2*])
+          node(p4,[*4*])
+          edge(p2,p4,"->",bend: 55deg)
+          edge(p4,p2,"->",bend: 55deg)
+        }
+      )
+    )
+  ]
+  #uncv("5-")[
+    $
+      sigma = (1,3,5)(2,4)
+    $
+  ]
+  #v(-1em)
+  #uncv("6-")[
+    $
+      tau = (1,2,3,4,5)
+    $
+  ]
+]
+#slide(title: "循環表示法(Cycle)")[
+  $ sigma = mat(1, 2, 3, 4, 5; 3, 4, 5, 2, 1)  =  (1,3,5)(2,4) $
+  $ tau = mat()$
+  #v(1em)
   #only("4-")[
     #grid(
       columns: (1fr,1fr),
@@ -817,9 +840,9 @@
       })
     })
 ]
-#new-section-slide("作用群",subtitle:"Group Action")
+#new-section-slide("群作用",subtitle:"Group Action")
 #let gset = $G negspace textb("-set")$
-#slide(title: "作用群")[
+#slide(title: "群作用")[
   #set text(size: 19pt)
 
   #definition(number:"4.1")[
