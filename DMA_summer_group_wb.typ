@@ -559,6 +559,8 @@ $
     &<==> exists tilde(g) in Stab_G (x) st g = h tilde(g)\
     &<==> g in {h tilde(g) | tilde(g) in Stab_G (x)}
   $
+  這裡可以很清楚的看到，對於所有$tilde(g) in Stab_G(x)$，$f(h tilde(g)) = h tilde(g) = h x =y $。
+  
   所以，$f(g) = y <==> g in {h tilde(g) | tilde(g) in Stab_G (x)}$。因此，每個$y in G_x$ 都 $abs(Stab_G (x))$ 個 $g in G$ 使得 $f(g) = y$。\
   所以，$abs(G) = abs(G_x) abs(Stab_G (x))$。
 
