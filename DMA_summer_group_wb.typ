@@ -490,14 +490,6 @@ $
 ]
 == 不動點 (Fixed point)、穩定子群 (stabilizers subgroup)、軌道 (Orbits)
 #let Stab = math.op("Stab")
-#definition[
-  讓$X$是一個#gset，讓$x in X$，$g in G$。我們定義；
-  $
-    Stab_G (x) = {g in G | g x = x} \
-    X^g = {x in X | g x = x}
-  $
-  $Stab_G (x)$稱為$x$的*穩定子群*，$X^g$稱為$g$的*不動點*。
-]
 #theorem[
   讓$X$是一個#gset，我們定義一個在$X$上的關係$tilde.op$，對於所有的$x,y in X$，$x tilde.op y$當且僅當存在$g in G$，使得$g x = y$。這個關係是一個等價關係。
 ] <relation>
@@ -509,9 +501,18 @@ $
 #definition[
   讓$X$是一個#gset，每一個在 @relation 下的等價類稱為一個*軌道*。如果$x in X$，包含$x$的分割是$x$的軌道，記作$G_x$。
 ]
-#theorem[
+#remark[
   讓 $X$ 是一個 #gset，$x in X$，那麼 $x$ 的軌道 $G_x = {g x mid(|) g in G}$。
 ]
+#definition[
+  讓$X$是一個#gset，讓$x in X$，$g in G$。我們定義；
+  $
+    Stab_G (x) = {g in G | g x = x} \
+    X^g = {x in X | g x = x}
+  $
+  $Stab_G (x)$稱為$x$的*穩定子群*，$X^g$稱為$g$的*不動點*。
+]
+
 
 
 #theorem([軌道-穩定子定理 (Orbit-Stabilizer Theorem)])[
@@ -536,6 +537,7 @@ $
   所以，$abs(G) = abs(G_x) abs(Stab_G (x))$。
 
 ]
+#pagebreak()
 == 伯恩賽德引理 (Burnside’s Lemma)
 #theorem([*伯恩賽德引理*])[
   讓$G$是一個有限群，讓$X$是一個#gset。讓$r$是$X$的軌道數，那麼
@@ -705,6 +707,7 @@ $
 
 ]
 
+== 練習
 #exercise[
   對於正$n$邊形的對稱群$D_n$，$abs(D_n)$是多少?
 ]
