@@ -8,7 +8,7 @@
 #show math.equation: set block(spacing: 0.9em)
 
 #let theorem = thmbox(
-	"thm",
+	"p",
 	"Theorem",
 	// fill: rgb("e8e8f8"),
   stroke: black,
@@ -16,7 +16,7 @@
 	padding: (y: 0em))
 
 #let definition = thmbox(
-	"definition",
+	"p",
 	"Definition",
 	// fill: rgb("e8f8e8"),
     stroke: black,
@@ -24,7 +24,13 @@
 	padding: (y: 0em))
 
 #let proof = thmproof("proof","Proof")
-
+#let lemma = thmbox(
+  "p",
+  "Lemma",
+  // fill: rgb("f8e8e8"),
+    stroke: black,
+  base_level: 1,
+  padding: (y: 0em))
 #let example = thmplain("example","Example").with(
 	inset: (top: 0.5em, bottom: 0.5em, left: 1em, right: 1em),
 	numbering: none)
@@ -559,7 +565,7 @@ $
 ]
 // #pagebreak()
 == 伯恩賽德引理 (Burnside’s Lemma)
-#theorem([*伯恩賽德引理*])[
+#lemma([*伯恩賽德引理*])[
   讓$G$是一個有限群，讓$X$是一個#gset。讓$r$是$X$的軌道數，那麼
   $
     r dot abs(G) = sum_(g in G) abs(X^g)
