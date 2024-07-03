@@ -165,7 +165,7 @@
 #let slide = slide.with(title: "群的基礎性質")
 #slide(new-section: "Properties of Groups")[
   #set text(size: 19pt)
-  #theorem(number:"1.1")[
+  #theorem(number:"1.4")[
     如果$G$是一個群，那*消去率*成立，即對於所有的$a,b,c in G$，
     $ a*b = a*c => b = c \
        b*a = c*a => b = c $
@@ -197,7 +197,7 @@
 ]
 #slide(new-section: "Properties of Groups")[
   #set text(size: 19pt)
-  #theorem(number: "1.2")[
+  #theorem(number: "1.5")[
     群$G$的單位元素$e$唯一。
   ]
   #pause
@@ -222,7 +222,7 @@
 ]
 #slide[
   #set text(size: 19pt)
-  #theorem(number:"1.3")[
+  #theorem(number:"1.6")[
     讓$G$是一個群，$a b in G$，那麼
     $
       (a b)^(-1) = b^(-1) a^(-1)
@@ -869,7 +869,7 @@
 ]
 #slide(title:"作用群")[
   #set text(size: 19pt)
-  #theorem(number:"4.1")[
+  #theorem(number:"4.2")[
     讓$X$是一個#gset。如果$g x_1 = g x_2$，那$x_1 = x_2$
   ]
   #proof[
@@ -881,7 +881,7 @@
 ]
 #slide(title: "軌道 Orbits")[
   #set text(size: 19.5pt)
-  #theorem(number:"4.2")[
+  #theorem(number:"4.3")[
     讓$X$是一個#gset，我們定義一個在$X$上的關係$tilde.op$，對於所有的$x,y in X$，$x tilde.op y$當且僅當存在$g in G$，使得$g x = y$。這個關係是一個等價關係。
   ] <relation>
   #pause
@@ -896,10 +896,10 @@
 ]
 #slide(title: "軌道 Orbits")[
   #set text(size: 19pt)
-  #definition(number:"4.3")[
+  #definition(number:"4.4")[
     讓$X$是一個#gset，每一個在 Therorem 4.2 下的等價類稱為一個*軌道*。如果$x in X$，包含$x$的分割是$x$的軌道，記作$G_x$。
   ]
-  #theorem(number:"4.3")[
+  #remark()[
     讓 $X$ 是一個 #gset，$x in X$，那麼 $x$ 的軌道 $G_x = {g x mid(|) g in G}$。
   ]
 ]
@@ -908,7 +908,7 @@
   *Fixed point, Stabilizers subgroup *
   #set text(size: 19pt)
 
-  #definition(number: "4.2")[
+  #definition(number: "4.5")[
     讓$X$是一個#gset，讓$x in X$，$g in G$。我們定義；
     $
       Stab_G (x) = {g in G | g x = x} \
@@ -924,7 +924,7 @@
 
 #slide(title: "軌道-穩定子定理")[
   #set text(size: 20pt)
-  #theorem([軌道-穩定子定理 (Orbit-Stabilizer Theorem)],number:"4.4")[
+  #theorem([軌道-穩定子定理 (Orbit-Stabilizer Theorem)],number:"4.6")[
     讓$G$是一個有限群，讓 $X$ 是一個 #gset，$x in X$，那麼 $abs(G) = abs(G_x) abs(Stab_G (x))$。
   ] <orbit-stabilizer>
   #figure(
@@ -964,7 +964,7 @@
 ]
 #slide(title: "伯恩賽德引理 (Burnside’s Lemma)")[
   #set text(size: 19pt)
-  #theorem([*伯恩賽德引理*],number:"4.5")[
+  #lemma([*伯恩賽德引理*],number:"4.7")[
     讓$G$是一個有限群，讓$X$是一個#gset。讓$r$是$X$的軌道數，那麼
     $
       r dot abs(G) = sum_(g in G) abs(X^g)
