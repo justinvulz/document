@@ -68,13 +68,25 @@
 ]
 
 #example[
+  #set table(stroke: (x,y) =>(
+    bottom: if y==0  {1pt},
+    right: if x==0 {1pt},
+  ))
   我們來看一些例子：\ 
   
   - $angle.l ZZ, + angle.r$、$angle.l QQ,+ angle.r$、$angle.l RR,+ angle.r$
 
   - $angle.l QQ^+, times angle.r$
   
-  - $angle.l ZZ_n, +_n angle.r$
+  - $C_3 = {e,a,b}$ 與下面的運算是一個群。 #table(
+    columns: (2em,2em,2em,2em),
+    rows: auto,
+    align: center,
+    $cir$, $e$, $a$, $b$,
+    $e$, $e$, $a$, $b$,
+    $a$, $a$, $b$, $e$,
+    $b$, $b$, $e$, $a$
+  ) 
 ]
 
 #remark[有時候我們會省略二元運算$*$，以$G$表示一個群。]
@@ -86,7 +98,6 @@
   一個群$G$如果滿足交換率i.e. 對於所有的$a,b in G$，$ a*b = b*a $，則稱$G$是一個*交換群*(Abelian groups)。
 ]
 
-#pagebreak()
 
 == 群的性質
 #theorem[
