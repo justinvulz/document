@@ -1,6 +1,8 @@
 #import "./typst_packages/lecture.typ": *
 #import "@preview/cetz:0.2.2"
 #import "@preview/fletcher:0.4.5" as fletcher: diagram,node,edge
+#import fletcher.shapes:circle
+
 
 #show par: set block(spacing: 0.9em)
 #show math.equation: set block(spacing: 0.9em)
@@ -26,7 +28,12 @@
 #let example = thmplain("example","Example").with(
 	inset: (top: 0.5em, bottom: 0.5em, left: 1em, right: 1em),
 	numbering: none)
-
+#let exercise = thmbox(
+  "exercise",
+  "Exercise",
+  stroke: black + 1pt,
+  base: none,           
+).with(numbering: "I")  
 #let remark = thmplain("remark","Remark").with(
 	inset: (top: 0.5em, bottom: 0.5em, left: 1em, right: 1em),
 	numbering: none)
@@ -85,15 +92,16 @@
 #theorem[
   如果$G$是一個群，那*消去率*成立，即對於所有的$a,b,c in G$，
   $ a*b = a*c => b = c \
-     b*a = b*c => b = c $
+     b*a = c*a => b = c $
 ]
 #proof[
-  讓$G$是一個群，$a,b,c in G$。假設$a*b = a*c$，因為$a in G$，所以$a$的反元素$a^(-1)$存在，且$a*a^(-1) = e$。
+  讓$G$是一個群，$a,b,c in G$。假設$a*b = a*c$，因為$a in G$，所以$a$的反元素$a^(-1)$存在，且$a*a^(-1) = a^(-1)*a = e$。
   $
     &a*b = a*c \
     => &a^(-1)*a*b = a^(-1)*a*c \
     => &e*b = e*a 
   $
+  我們只證明了$(a b)^(-1)b^(-1) a^(-1) =e$，但是我們也需要證明$b^(-1) a^(-1)(a b)^(-1) =e$也是成立的。
 ]
 #theorem[
   群$G$的單位元素$e$唯一。
@@ -184,13 +192,6 @@ $
   $
   所以像是 $sigma cir tau (1) = sigma(tau(1)) = sigma(2) = 4$
 ]
-#definition[
-  一個集合$A$的所有置換構成一個群，我們稱這個群為$A$的*置換群*，記作$S_A$。
-]
-#remark[
-  $S_n$ 表示 $n$ 個元素的置換群。
-  $S_n$的order是 $n!$。
-]
 == 循環置換 (Cyclc)
 一個置換除了可以用上述的方法表示，我們還可以用*循環*的方式表示。我們來看下面的例子，
 定義一個置換$ sigma = mat(1, 2, 3, 4, 5; 3, 4, 5, 2, 1) $
@@ -225,109 +226,122 @@ $
     )
   ),
   caption: "一個置換的循環"
-
 )
+透過循環置換，我們可以很容易的表示一個置換，並且可以很容易的計算該置換的反元素。例如，對於上面的例子，$sigma^(-1) = (5,3,1)(4,2)$。
+#remark[
+  如果一個置換$ sigma = mat(1,2,3,4,5;1,2,4,5,3) = (1)(2)(3,4,5) $
+  為了簡化，我們有時候會省略一個元素的循環，寫成 $sigma = (3,4,5)$。
+]
+#definition[
+  一個集合$A$的所有置換構成一個群，我們稱這個群為$A$的*置換群*，記作$S_A$。
+]
+#remark[
+  $S_n$ 表示 $n$ 個元素的置換群。
+  $S_n$的order是 $n!$。
+]
+
 
 = 空間對稱群(Symmetry Groups)
-接下來我們考慮一種特殊的置換群，稱為*空間對稱群*。我們考慮一個正三角形，將正三角形的頂點邊繼承$1,2,3$ (@fig3)，我們來討論他有那些對稱性。我們把順時鐘旋轉$120 degree$ 得到一個新的正三角形(@sqr90)所示。我們可以將這個操作表示成一個置換:
-$ rho_1 = mat(1,2,3; 2,3,1) = (1,2,3) $
-我們稱這樣的置換是*對稱置換*，他可以把圖形打回自身。
+接下來我們考慮一種特殊的置換群，稱為*空間對稱群*。我們考慮一個正三角形，將正三角形的頂點邊繼承$1,2,3$，我們來討論他有那些對稱性。
+// 我們把順時鐘旋轉$120 degree$ 得到一個新的正三角形(@sqr90)所示。我們可以將這個操作表示成一個置換:
+// $ rho_1 = mat(1,2,3; 2,3,1) = (1,2,3) $
+// 我們稱這樣的置換是*對稱置換*，他可以把圖形打回自身。
 #let (p1,p2,p3) = ((0,0),(1,0),(0.5,-0.866))
-#grid(
-  columns: (1fr,1fr,1fr),
-  rows: (auto),
-  align: center,
-  [#figure(
-    diagram(
-      {
-        node(p1,[*1*])
-        node(p2,[*2*])
-        node(p3,[*3*])
-        edge(p1,p2,"-")
-        edge(p2,p3,"-")
-        edge(p3,p1,"-")
-      }
-    ),
-    caption: "正三角形", 
-  )<fig3>],
-  [#figure(
-    diagram({
-      node(p1,[*2*])
-      node(p2,[*3*])
-      node(p3,[*1*])
-      edge(p1,p2,"-")
-      edge(p2,p3,"-")
-      edge(p3,p1,"-")
+// #grid(
+//   columns: (1fr,1fr,1fr),
+//   rows: (auto),
+//   align: center,
+//   [#figure(
+//     diagram(
+//       {
+//         node(p1,[*1*])
+//         node(p2,[*2*])
+//         node(p3,[*3*])
+//         edge(p1,p2,"-")
+//         edge(p2,p3,"-")
+//         edge(p3,p1,"-")
+//       }
+//     ),
+//     caption: "正三角形", 
+//   )<fig3>],
+//   [#figure(
+//     diagram({
+//       node(p1,[*2*])
+//       node(p2,[*3*])
+//       node(p3,[*1*])
+//       edge(p1,p2,"-")
+//       edge(p2,p3,"-")
+//       edge(p3,p1,"-")
       
-    }),
-    caption: [順時針旋轉 $120$ 度],
-  )<sqr90>],
-  [#figure(
-    diagram({
-      node(p1,[*1*])
-      node(p2,[*3*])
-      node(p3,[*2*])
-      edge(p1,p2,"-")
-      edge(p2,p3,"-")
-      edge(p3,p1,"-")
-      let mid = ((p2.at(0)+p3.at(0))/1.9,(p2.at(1)+p3.at(1))/1.9)
-      edge((0,0),mid,stroke: red)
-    }),
-    caption: [沿某一軸鏡射],
-  )<sqf1>]
-)
-接下來看一下 @fig3 到 @sqf1 的變換，我們可以得到另一個置換 
-$ tau_1 = mat(1,2,3;1,3,2)  = (1)(2,3) $
-接著我考慮 $tau_1 cir rho_1$ 這個置換，先把三角形旋轉$120 degree$，再把它沿著@sqf1 的軸鏡射，我們可以得到一個新的置換 :
-$
-  tau_1 cir rho_1 &= mat(1,2,3;1,3,2) mat(1,2,3;2,3,1) \
-    &= mat(1,2,3;3,1,2) \
-    &= (1,3,2)
-$
-而 $tau_1 cir rho_1$ 這個置換就是沿著另一個軸鏡射的置換。如下圖所示：
-#grid(
-  columns: (1fr,1fr,1fr),
-  rows: (auto),
-  align: center,
-  [#figure(
-    diagram(
-      {
-        node(p1,[*1*])
-        node(p2,[*2*])
-        node(p3,[*3*])
-        edge(p1,p2,"-")
-        edge(p2,p3,"-")
-        edge(p3,p1,"-")
-      }
-    ),
-    caption: "正三角形", 
-  )],
-  [#figure(
-    diagram({
-      node(p1,[*2*])
-      node(p2,[*3*])
-      node(p3,[*1*])
-      edge(p1,p2,"-")
-      edge(p2,p3,"-")
-      edge(p3,p1,"-")
+//     }),
+//     caption: [順時針旋轉 $120$ 度],
+//   )<sqr90>],
+//   [#figure(
+//     diagram({
+//       node(p1,[*1*])
+//       node(p2,[*3*])
+//       node(p3,[*2*])
+//       edge(p1,p2,"-")
+//       edge(p2,p3,"-")
+//       edge(p3,p1,"-")
+//       let mid = ((p2.at(0)+p3.at(0))/1.9,(p2.at(1)+p3.at(1))/1.9)
+//       edge((0,0),mid,stroke: red)
+//     }),
+//     caption: [沿某一軸鏡射],
+//   )<sqf1>]
+// )
+// 接下來看一下 @fig3 到 @sqf1 的變換，我們可以得到另一個置換 
+// $ tau_1 = mat(1,2,3;1,3,2)  = (1)(2,3) $
+// 接著我考慮 $tau_1 cir rho_1$ 這個置換，先把三角形旋轉$120 degree$，再把它沿著@sqf1 的軸鏡射，我們可以得到一個新的置換 :
+// $
+//   tau_1 cir rho_1 &= mat(1,2,3;1,3,2) mat(1,2,3;2,3,1) \
+//     &= mat(1,2,3;3,1,2) \
+//     &= (1,3,2)
+// $
+// 而 $tau_1 cir rho_1$ 這個置換就是沿著另一個軸鏡射的置換。如下圖所示：
+// #grid(
+//   columns: (1fr,1fr,1fr),
+//   rows: (auto),
+//   align: center,
+//   [#figure(
+//     diagram(
+//       {
+//         node(p1,[*1*])
+//         node(p2,[*2*])
+//         node(p3,[*3*])
+//         edge(p1,p2,"-")
+//         edge(p2,p3,"-")
+//         edge(p3,p1,"-")
+//       }
+//     ),
+//     caption: "正三角形", 
+//   )],
+//   [#figure(
+//     diagram({
+//       node(p1,[*2*])
+//       node(p2,[*3*])
+//       node(p3,[*1*])
+//       edge(p1,p2,"-")
+//       edge(p2,p3,"-")
+//       edge(p3,p1,"-")
       
-    }),
-    caption: [$rho_1$],
-  )],
-  [#figure(
-    diagram({
-      node(p1,[*2*])
-      node(p2,[*1*])
-      node(p3,[*3*])
-      edge(p1,p2,"-")
-      edge(p2,p3,"-")
-      edge(p3,p1,"-")
-      edge(p3,(0.5,0.1),stroke: red)
-    }),
-    caption: [$tau_1 cir rho_1$],
-  )]
-)
-#pagebreak()
+//     }),
+//     caption: [$rho_1$],
+//   )],
+//   [#figure(
+//     diagram({
+//       node(p1,[*2*])
+//       node(p2,[*1*])
+//       node(p3,[*3*])
+//       edge(p1,p2,"-")
+//       edge(p2,p3,"-")
+//       edge(p3,p1,"-")
+//       edge(p3,(0.5,0.1),stroke: red)
+//     }),
+//     caption: [$tau_1 cir rho_1$],
+//   )]
+// )
+
 我們可以繼續枚舉所有三角形的對稱操作，我們可以得到以下的置換:
 #grid(
     columns :(1fr,1fr,1fr),
@@ -405,16 +419,10 @@ $
       }),caption:[$mat(1,2,3;1,3,2) = (3,2)(1) = tau_3$]      
     )],
   )
-把上述的對稱置換收集起來，並用上面提到的$cir$當作二運算，我們可以得到一個*空間對稱群*，稱為正三角形的對稱群$D_3$。我們可以將$D_3$寫成一個表格：
-$
-  D_3 = {e, rho_1, rho_2, tau_1, tau_2, tau_3} 
-$
-#set table(stroke: (x,y) =>(
-  bottom: if y==0  {1pt},
-  right: if x==0 {1pt},
-))
+把上述的對稱置換收集起來，並用上面提到的$cir$當作二運算，我們可以得到一個*空間對稱群*，稱為正三角形的對稱群$D_3$。
 
-同樣的，我們可以考慮正方形的對稱群$D_4$，正方形的對稱群有$8$個元素，我們可以將$D_4$寫成一個表格：
+
+同樣的，我們可以考慮正方形的對稱群$D_4$，正方形的對稱群有$8$個元素，我們可以將$D_4$寫下來：
 $
   D_4 = {e, rho_1, rho_2, rho_3, tau_1, tau_2, tau_3, tau_4}
 $
@@ -432,7 +440,8 @@ $
     edge((-0.1,0.5),(1.1,0.5),"-")
     edge((0,0),(1,1),"-")
     edge((1,0),(0,1),"-")
-  })
+  }),
+  caption: "正方形的對稱性"
 )<refq>
 其中$tau_1 dots tau_4$是以@refq 中的軸鏡射為軸的對稱操作，$rho_1 dots rho_3$是以對角線為軸的對稱操作。我們可以把他們用循環寫下來：
 $
@@ -445,54 +454,17 @@ $
   tau_3 &= (1,2)(4,3)\
   tau_4 &= (1,4)(2,3)\
 $
-值得注意的是 $sigma = (1,2)(4)(3)$ 他是一個置換，但不是一個對稱置換，因為他不能把正方形打回自身。
-#let (p1,p2,p3,p4) = ((0,0),(1,0),(1,1),(0,1))
-#grid(
-  columns: (1fr,1fr,1fr),
-  rows: (auto),
-  figure(
-    diagram({
-      node(p1,[*1*])
-      node(p2,[*2*])
-      node(p3,[*3*])
-      node(p4,[*4*])
-      edge(p1,p2,"-")
-      edge(p2,p3,"-")
-      edge(p3,p4,"-")
-      edge(p4,p1,"-")
-    }),
-    caption: "正方形"
-  ),
-  figure(
-    diagram({
-      node(p1,[*3*])
-      node(p2,[*4*])
-      node(p3,[*1*])
-      node(p4,[*2*])
-      edge(p1,p2,"-")
-      edge(p2,p3,"-")
-      edge(p3,p4,"-")
-      edge(p4,p1,"-")
-    }),
-    caption: [$rho_2$]
-  ),
-  figure(
-    diagram({
-      node(p1,[*2*])
-      node(p2,[*1*])
-      node(p3,[*3*])
-      node(p4,[*4*])
-      edge(p1,p2,"-")
-      edge(p2,p4,"-")
-      edge(p3,p4,"-")
-      edge(p3,p1,"-")
-    }),
-    caption: [$sigma$ 不是一個對稱置換]
-  )
-)
-#theorem[
-  正$n$邊形的對稱群是$D_n$，$D_n$的order是$2n$。
-]
+
+
+== 計算對稱群的order
+我們上面提到了正三角形的對稱群$D_3$和正方形的對稱群$D_4$，並列出其中的一些元素，那我們要怎麼確定這些對稱群的order呢？我們下面來討論一個方法。
+
++ 先找到圖形的中心$c$
++ 畫一條通過中心的直線。
++ 假設有$m$個對稱稱使得這條線不動，而條線在對稱性下會被打到$n$個不同的位子。
++ 那麼這個對稱群的order就是$n times m$。
+
+下一節會證明這個方法是正確的。
 
 = 群作用(Group Action)
 
@@ -575,11 +547,11 @@ $
   (雙重計數)
   #set math.equation(numbering: "(1)")
   我們考慮序組$(g,x)$，其中$g x = x$。假設這樣的序組有$N$個。
-  對於每一個$g in G$，我們計算$(g,x)$的數量，這個數量是$abs(X^g)$。所以
+  給定一個$g in G$，我們計算$(g,x)$的數量，這個數量是$abs(X^g)$。所以
   $
     N = sum_(g in G) abs(X^g)
   $
-  另一方面，對於每一個$x in X$，我們計算$(g,x)$的數量，這個數量是$abs(Stab_G (x))$。所以
+  另一方面，給定一個$x in X$，我們計算$(g,x)$的數量，這個數量是$abs(Stab_G (x))$。所以
   $
     N = sum_(x in X) abs(Stab_G (x))
   $
@@ -713,6 +685,46 @@ $
     r &= 1/24 (n^6 + 3n^4 + 12n^3 + 8n^2)
   $
 ]
-// #example[
-//   現在我們有一串項鍊，我們有$n$個不同的珠子，我們要把這些珠子串成一串項鍊，可以通過旋轉變換得到視為相同的項鍊。總共有多少種不同的項鍊？
-// ]
+#example[
+  在旋轉的對稱姓下，用$n$個顏色對一個正四面體的*邊*上色，總共有多少種不同的著色方式？
+  #figure[
+    #image("/pic/image.png",width: 11em)
+  ]
+
+  我們讓$G$是正四面體的對稱群，我們通過軌道-穩定子定理，我們可以得到$abs(G) =12$
+  我們討論裡面的對置換：
+  - 單位變換:$(1)(2)(3)(4)(5)(6)$
+  - $8$個固定一面的旋轉:$(1,2,3)(4,5,6)$
+  - $3$個固定兩邊的旋轉:$(1)(6)(2,4)(5,3)$
+
+  所以我們有
+  $
+    r = 1/12 (n^6 + 8n^2 + 3n^4) 
+  $
+
+
+]
+
+#exercise[
+  對於正$n$邊形的對稱群$D_n$，$abs(D_n)$是多少?
+]
+
+#exercise[
+  有$n$個不同顏色的珠子，我們要把這些珠子串成一串$5$個珠子的項鍊，可以通過旋轉變換得到視為相同的項鍊。總共有多少種不同的項鍊？
+  #figure[
+    #diagram(
+      node-stroke: 1pt,
+      {
+      for t in range(5).map(i => i/5*360deg) {
+        node((calc.cos(t),calc.sin(t)),[#v(0.1em)],shape: circle)
+        edge((calc.cos(t),calc.sin(t)),(calc.cos(t+72deg),calc.sin(t+72deg)),
+          bend: 30deg)
+      }
+    })
+  ]
+]
+
+#exercise[
+  在旋轉的對稱姓下，用$n$個顏色對一個正四面體的*面*上色，總共有多少種不同的著色方式？
+]
+

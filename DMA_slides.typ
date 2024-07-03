@@ -466,58 +466,76 @@
       sigma = (1,3,5)(2,4)
     $
   ]
-  #v(-1em)
-  #uncv("6-")[
-    $
-      tau = (1,2,3,4,5)
-    $
-  ]
 ]
 #slide(title: "循環表示法(Cycle)")[
-  $ sigma = mat(1, 2, 3, 4, 5; 3, 4, 5, 2, 1)  =  (1,3,5)(2,4) $
-  $ tau = mat()$
-  #v(1em)
-  #only("4-")[
-    #grid(
-      columns: (1fr,1fr),
-      rows: (auto),
-      align: center,
-      diagram(
-        {
-          // traingle
-          let (p1,p3,p5) = ((0,0),(1,0),(0.5,0.866))
-          node(p1,[*1*])
-          node(p3,[*3*])
-          node(p5,[*5*])
-          edge(p1,p3,"->",bend: 55deg)
-          edge(p3,p5,"->",bend: 55deg)
-          edge(p5,p1,"->",bend: 55deg) 
-        }
-      ),
-      diagram(
-        {
-          // traingle
-          let (p2,p4) = ((0,0),(1,0))
-          node(p2,[*2*])
-          node(p4,[*4*])
-          edge(p2,p4,"->",bend: 55deg)
-          edge(p4,p2,"->",bend: 55deg)
-        }
-      )
+  $ sigma = mat(1, 2, 3, 4, 5; 3, 4, 5, 2, 1)  =  (1,3,5)(2,4) = (3,5,1)(4,2) $
+  $ tau = mat(1,2,3,4,5;2,3,4,5,1) = (1,2,3,4,5) = (3,4,5,1,2) $
+  $ phi = mat(1,2,3,4,5;1,2,4,5,3)= (3,4,5)(1)(2) = (3,4,5) $
+]
+
+#slide(title: "循環表示法(Cycle)")[
+  $ sigma = (1,3,5)(2,4) $
+  #only("2")[#grid(
+    columns: (1fr,1fr),
+    rows: (auto),
+    align: center,
+    diagram(
+      {
+        // traingle
+        let (p1,p3,p5) = ((0,0),(1,0),(0.5,0.866))
+        node(p1,[*1*])
+        node(p3,[*3*])
+        node(p5,[*5*])
+        edge(p1,p3,"->",bend: 55deg)
+        edge(p3,p5,"->",bend: 55deg)
+        edge(p5,p1,"->",bend: 55deg) 
+      }
+    ),
+    diagram(
+      {
+        // traingle
+        let (p2,p4) = ((0,0),(1,0))
+        node(p2,[*2*])
+        node(p4,[*4*])
+        edge(p2,p4,"->",bend: 55deg)
+        edge(p4,p2,"->",bend: 55deg)
+      }
     )
-  ]
-  #uncv("5-")[
+  )]
+  #only("3-")[#grid(
+    columns: (1fr,1fr),
+    rows: (auto),
+    align: center,
+    diagram(
+      {
+        // traingle
+        let (p1,p3,p5) = ((0,0),(1,0),(0.5,0.866))
+        node(p1,[*1*])
+        node(p3,[*3*])
+        node(p5,[*5*])
+        edge(p3,p1,"->",bend: -55deg)
+        edge(p5,p3,"->",bend: -55deg)
+        edge(p1,p5,"->",bend: -55deg) 
+      }
+    ),
+    diagram(
+      {
+        // traingle
+        let (p2,p4) = ((0,0),(1,0))
+        node(p2,[*2*])
+        node(p4,[*4*])
+        edge(p2,p4,"->",bend: -55deg)
+        edge(p4,p2,"->",bend: -55deg)
+      }
+    )
+  )]
+  #only("3-")[
     $
-      sigma = (1,3,5)(2,4)
-    $
-  ]
-  #v(-1em)
-  #uncv("6-")[
-    $
-      tau = (1,2,3,4,5)
+      sigma^(-1) = (5,3,1)(2,4)
     $
   ]
 ]
+
 #slide(title: "置換群")[
   #set text(size: 19pt)
   #definition(number:"2.2")[
@@ -628,84 +646,7 @@
 
   )
 ]
-#slide[
-  #set figure(supplement: none)
-  #grid(
-    columns :(1fr,1fr,1fr),
-    rows: (1fr,1fr),
-    align: center,
-    [#figure(
-      diagram(
-        {
-          node(p1,[*1*])
-          node(p2,[*2*])
-          node(p3,[*3*])
-          edge(p1,p2,"-")
-          edge(p2,p3,"-")
-          edge(p3,p1,"-")
-        }
-      ),caption:[$mat(1,2,3;1,2,3) = e$]
-    )],
-    [#figure(
-      diagram({
-        node(p1,[*2*])
-        node(p2,[*3*])
-        node(p3,[*1*])
-        edge(p1,p2,"-")
-        edge(p2,p3,"-")
-        edge(p3,p1,"-")
 
-      }),caption:[$mat(1,2,3;2,3,1) = (1,2,3)$]
-    )],
-    [#figure(
-      diagram(
-        {
-          node(p1,[*3*])
-          node(p2,[*1*])
-          node(p3,[*2*])
-          edge(p1,p2,"-")
-          edge(p2,p3,"-")
-          edge(p3,p1,"-")
-        }
-      ),caption:[$mat(1,2,3;3,1,2) = (3,2,1)$]
-    )],
-    [#figure(
-      diagram({
-        node(p1,[*2*])
-        node(p2,[*1*])
-        node(p3,[*3*])
-        edge(p1,p2,"-")
-        edge(p2,p3,"-")
-        edge(p3,p1,"-")
-        edge(p3,(0.5,0.1),stroke: red)
-      }),caption:[$mat(1,2,3;2,1,3) = (1,2)(3)$]
-    )],
-    [#figure(
-      diagram({
-        node(p1,[*3*])
-        node(p2,[*2*])
-        node(p3,[*1*])
-        edge(p1,p2,"-")
-        edge(p2,p3,"-")
-        edge(p3,p1,"-")
-        let mid = ((p3.at(0)+p1.at(0))/1.9,(p3.at(1)+p1.at(1))/1.9)
-        edge(p2,mid,stroke: red)
-      }),caption:[$mat(1,2,3;3,2,1) = (1,3)(2)$]
-    )],
-    [#figure(
-      diagram({
-        node(p1,[*1*])
-        node(p2,[*3*])
-        node(p3,[*2*])
-        edge(p1,p2,"-")
-        edge(p2,p3,"-")
-        edge(p3,p1,"-")
-        let mid = ((p3.at(0)+p2.at(0))/1.9,(p3.at(1)+p2.at(1))/1.9)
-        edge(p1,mid,stroke: red)
-      }),caption:[$mat(1,2,3;1,3,2) = (3,2)(1)$]      
-    )],
-  )
-]
 #slide(title:[$D_3$])[
   把上面正三角形的對稱性的置換收集起來，我們得到一個群，稱為正三角形的*對稱群*$D_3$。
 
@@ -1181,7 +1122,7 @@
 #slide[
   #let mg = $m_g$
   #set text(size: 21pt)
-  我們讓$G = D_6$是正六面體的對稱群，$X$是所有著色的結果($abs(X) = n^6$)，我們知道$abs(G) = 24$
+  我們讓$G = D$是正六面體的對稱群，$X$是所有著色的結果($abs(X) = n^6$)，我們知道$abs(G) = 24$
   
   #pause
   #v(3em)
