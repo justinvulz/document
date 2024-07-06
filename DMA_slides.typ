@@ -128,23 +128,33 @@
     bottom: if y==0  {1pt},
     right: if x==0 {1pt},
   ))
-  #set text(size: 24pt)
+  #let t(e,a,b,op) = table(
+    columns: (2em,2em,2em,2em),
+    rows: auto,
+    align: center,
+    op, e, a, b,
+    e, e, a, b,
+    a, a, b, e,
+    b, b, e, a
+  )
+  #set text(size: 21pt)
+
   Example:
   - 整數集合 $ZZ$ 與加法運算 $+$ 構成一個群。 $angle.l ZZ,+ angle.r$\
     單位元素為 $0$，反元素為 $-a$。
   - 整數集合 $ZZ$ 與乘法運算 $*$ 不是一個群。\
     乘法在整數裡沒有反元素。
   - $angle.l QQ, + angle.r$,$angle.l RR, + angle.r$ 是群。
-  - $C_3 = {e,a,b}$ 與下面的運算是一個群。 #table(
-    columns: (2em,2em,2em,2em),
-    rows: auto,
-    align: center,
-    $cir$, $e$, $a$, $b$,
-    $e$, $e$, $a$, $b$,
-    $a$, $a$, $b$, $e$,
-    $b$, $b$, $e$, $a$
+  - $C_3 = {e,a,b}$ 與下面的運算是一個群。 
   
-  ) 
+  #grid(
+    columns: (1fr,1fr),
+    rows: (auto),
+    align: center,
+    t($e$,$a$,$b$,"*"),
+    t($0$,$1$,$2$,"+")
+  )
+  $3$的模數群 $ZZ_3 = {0,1,2}$ 與加法運算 $+$ 是一個群。 
   
 ]
 #slide[
@@ -159,8 +169,13 @@
   #pause
   Example:
   - 整數集合 $ZZ$ 與加法運算 $+$ 是一個交換群。
-  - $C_3$ 的 order 為 $3$。
+  - $C_3 ={e,a,b}$ 的 order 為 $3$。
   - 可逆矩陣的集合與矩陣乘法是一個群，但不是交換群。
+]
+#slide(title: "MEME")[
+  #align(center)[
+    #image("pic/meme.jpg")
+  ]
 ]
 #let slide = slide.with(title: "群的基礎性質")
 #slide(new-section: "Properties of Groups")[
@@ -195,6 +210,26 @@
   ]
   
 ]
+#slide(title:"Example")[
+  // #set text(size: 19pt)
+  #uncv("1-")[
+    讓$x,y in ZZ$，假設$3+x= 3+y$，那麼$x=y$
+  ]
+  
+  #uncv("2-")[
+    讓$A,B,C$是$n times n$的矩陣，如果$A B = A C$，那麼#pin(11)$B=C$#pin(12) ?
+  ]
+ 
+  #uncv("3-")[
+    #pinit-line(12,11,start-dy: -0.3em,end-dy: -0.3em,stroke: 5pt+red)
+  ]
+
+  #uncv("4-")[
+    讓$A,B,C$是$n times n$的*可逆矩陣*，如果$B A = C A$，那麼$B=C$
+  ]
+ 
+]
+
 #slide(new-section: "Properties of Groups")[
   #set text(size: 19pt)
   #theorem(number: "1.5")[
@@ -220,6 +255,7 @@
   ]
   
 ]
+
 #slide[
   #set text(size: 19pt)
   #theorem(number:"1.6")[
@@ -560,7 +596,7 @@
 ]
 
 
-#new-section-slide("空間對稱群",subtitle:"Symmetry Group")
+#new-section-slide("對稱群",subtitle:"Symmetry Group")
 #let (p1,p2,p3) = ((0,0),(1,0),(0.5,-0.866))
 
 #slide(title:"對稱群")[
@@ -569,84 +605,93 @@
 
 ]
 #slide[
+  #set figure(supplement: none)
+  #let tri(a,b,c,script:none) = diagram({
+    node(p1,[*#a*])
+    node(p2,[*#b*])
+    node(p3,[*#c*])
+    edge(p1,p2,"-")
+    edge(p2,p3,"-")
+    edge(p3,p1,"-")
+    script
+  })
   #grid(
     columns :(1fr,1fr,1fr),
     rows: (1fr,1fr),
     align: center,
     [#figure(
-      diagram(
-        {
-          node(p1,[*1*])
-          node(p2,[*2*])
-          node(p3,[*3*])
-          edge(p1,p2,"-")
-          edge(p2,p3,"-")
-          edge(p3,p1,"-")
-        }
-      ),
+      tri(1,2,3),
     )],
     [#figure(
-      diagram({
-        node(p1,[*2*])
-        node(p2,[*3*])
-        node(p3,[*1*])
-        edge(p1,p2,"-")
-        edge(p2,p3,"-")
-        edge(p3,p1,"-")
-
-      }),
+      tri(2,3,1),
     )],
     [#figure(
-      diagram(
-        {
-          node(p1,[*3*])
-          node(p2,[*1*])
-          node(p3,[*2*])
-          edge(p1,p2,"-")
-          edge(p2,p3,"-")
-          edge(p3,p1,"-")
-        }
-      ),
+      tri(3,1,2),
     )],
     [#figure(
-      diagram({
-        node(p1,[*2*])
-        node(p2,[*1*])
-        node(p3,[*3*])
-        edge(p1,p2,"-")
-        edge(p2,p3,"-")
-        edge(p3,p1,"-")
-        edge(p3,(0.5,0.1),stroke: red)
-      }),
+      tri(2,1,3,script:{edge(p3,(0.5,0.1),stroke: red)})
     )],
     [#figure(
-      diagram({
-        node(p1,[*3*])
-        node(p2,[*2*])
-        node(p3,[*1*])
-        edge(p1,p2,"-")
-        edge(p2,p3,"-")
-        edge(p3,p1,"-")
+      tri(3,2,1,script:{
+        let mid = ((p3.at(0)+p1.at(0))/1.9,(p3.at(1)+p1.at(1))/1.9)
+        edge(p2,mid,stroke: red)
+      })
+    )],
+    [#figure(
+      tri(1,3,2,script:{
+        let mid = ((p3.at(0)+p2.at(0))/1.9,(p3.at(1)+p2.at(1))/1.9)
+        edge(p1,mid,stroke: red)
+      })
+    )],
+  )
+]
+#slide[
+  #set figure(supplement: none)
+  #let tri(a,b,c,script:none) = diagram({
+    node(p1,[*#a*])
+    node(p2,[*#b*])
+    node(p3,[*#c*])
+    edge(p1,p2,"-")
+    edge(p2,p3,"-")
+    edge(p3,p1,"-")
+    script
+  })
+  #grid(
+    columns :(1fr,1fr,1fr),
+    rows: (1fr,1fr),
+    align: center,
+    [#figure(
+      tri(1,2,3),
+      caption:$(1)(2)(3)$
+    )],
+    [#figure(
+      tri(2,3,1),
+      caption:$(1,2,3)$
+    )],
+    [#figure(
+      tri(3,1,2),
+      caption:$(3,2,1)$
+    )],
+    [#figure(
+      tri(2,1,3,script:{edge(p3,(0.5,0.1),stroke: red)}),
+      caption:$(1,2)$
+    )],
+    [#figure(
+      tri(3,2,1,script:{
         let mid = ((p3.at(0)+p1.at(0))/1.9,(p3.at(1)+p1.at(1))/1.9)
         edge(p2,mid,stroke: red)
       }),
+      caption:$(1,3)$
     )],
     [#figure(
-      diagram({
-        node(p1,[*1*])
-        node(p2,[*3*])
-        node(p3,[*2*])
-        edge(p1,p2,"-")
-        edge(p2,p3,"-")
-        edge(p3,p1,"-")
+      tri(1,3,2,script:{
         let mid = ((p3.at(0)+p2.at(0))/1.9,(p3.at(1)+p2.at(1))/1.9)
         edge(p1,mid,stroke: red)
       }),
+      caption:$(2,3)$
     )],
-
   )
 ]
-
 #slide(title:[$D_3$])[
   把上面正三角形的對稱性的置換收集起來，我們得到一個群，稱為正三角形的*對稱群*$D_3$。
 
@@ -702,66 +747,16 @@
     [#pause 那$D_4$的order是多少？ \ 只有$8$個嗎？]
   )
 ]
-// #slide(title:[$D_4$])[
-//   #set figure(supplement: none)
+#slide(title: "如何計算對稱群")[
 
-//   值得注意的是 $sigma = (1,2)(4)(3)$ 他是一個置換，但不是一個對稱置換，因為他不能把正方形打回自身。
-//   #v(20%)
-//   #let (p1,p2,p3,p4) = ((0,0),(1,0),(1,1),(0,1))
-//   #grid(
-//     columns: (1fr,1fr,1fr),
-//     rows: (auto),
-//     figure(
-//       diagram({
-//         node(p1,[*1*])
-//         node(p2,[*2*])
-//         node(p3,[*3*])
-//         node(p4,[*4*])
-//         edge(p1,p2,"-")
-//         edge(p2,p3,"-")
-//         edge(p3,p4,"-")
-//         edge(p4,p1,"-")
-//       }),
-//       caption: "正方形"
-//     ),
-//     figure(
-//       diagram({
-//         node(p1,[*3*])
-//         node(p2,[*4*])
-//         node(p3,[*1*])
-//         node(p4,[*2*])
-//         edge(p1,p2,"-")
-//         edge(p2,p3,"-")
-//         edge(p3,p4,"-")
-//         edge(p4,p1,"-")
-//       }),
-//       caption: [$rho_2$]
-//     ),
-//     figure(
-//       diagram({
-//         node(p1,[*2*])
-//         node(p2,[*1*])
-//         node(p3,[*3*])
-//         node(p4,[*4*])
-//         edge(p1,p2,"-")
-//         edge(p2,p4,"-")
-//         edge(p3,p4,"-")
-//         edge(p3,p1,"-")
-//       }),
-//       caption: [$sigma$ 不是一個對稱置換]
-//     )
-//   ) 
-// ]
-#slide(title: "如何計算空間對稱群")[
-
-  + 先找到圖形的不動點$c$
+  + 先找到圖形的不動點
   + 畫一條通過不動點的直線。
   + 假設有$m$個對稱稱使得這條線不動，而條線在對稱性下會被打到$n$個不同的位子。
   + 那麼這個對稱群的order就是$n times m$。
 
   下一節會證明這個方法是正確的。
 ]
-#slide(title: "如何計算空間對稱群")[
+#slide(title: "如何計算對稱群")[
   正$n$邊形的對稱群的order是#only("1")[多少?]。\
   立方體的有#only("1")[多少]不同的旋轉。
   #set align(center)
@@ -921,6 +916,81 @@
   - $X^e = X$
   
 ]
+
+
+#let tri(c1,c2,c3) = diagram({
+  node(p1,$space$,fill:c1,shape: circle)
+  node(p2,$space$,fill:c2,shape: circle)
+  node(p3,$space$,fill:c3,shape: circle)
+  edge(p1,p2,"-")
+  edge(p2,p3,"-")
+  edge(p3,p1,"-")
+})
+#slide[
+  #set text(size: 10pt)
+  #let c = (red,teal,lime)
+  #let (r,g,b) = c
+  #let arr = range(27).map(i => {
+    let a1 = calc.rem(i,3)
+    i = calc.quo(i,3)
+    let a2 = calc.rem(i,3)
+    i = calc.quo(i,3)
+    let a3 = calc.rem(i,3)
+    tri(
+    c.at(a3),
+    c.at(a2),
+    c.at(a1),)})
+  #grid(
+    columns: (1fr,)*9,
+    column-gutter: 0em,
+    rows: (1fr,)*3,
+    fill: (x,y) => {
+      let c = white;
+      if  x ==0{
+        if y == 0{
+          c = rgb("#b2c8eb");
+        }
+        if y == 1{
+          c = rgb("#b2ebc8");
+        }
+        if y == 2{
+          c = rgb("#ebc8b2");
+        }
+      }
+      if x==1{
+        c = rgb("#e9eba2");
+      }
+      if x==2{
+        c = rgb("#b2ebc8");
+      }
+      if x==3{
+        c = rgb("#ebc8b2");
+      }
+      if x==4{
+        c = rgb("#b2c8eb");
+      }
+      if x==5{
+        c = rgb("#b2ebc8");
+      }
+      if x==6{
+        c = rgb("#ebc8b2");
+      }
+      if (x==7 or x==8){
+        c = rgb("#e9eba2");
+      }
+      return c.desaturate(50%)
+    },
+    align: center+horizon,
+    tri(r,r,r),tri(r,r,g),tri(g,g,r),tri(b,b,g),tri(g,g,b),tri(r,r,b),tri(b,b,r),tri(r,g,b),tri(r,b,g),
+    tri(g,g,g),tri(g,r,r),tri(r,g,g),tri(g,b,b),tri(b,g,g),tri(b,r,r),tri(r,b,b),tri(b,r,g),tri(b,g,r),
+    tri(b,b,b),tri(r,g,r),tri(g,r,g),tri(b,g,b),tri(g,b,g),tri(r,b,r),tri(b,r,b),tri(g,b,r),tri(g,r,b)
+    
+  )
+  
+
+]
+
+
 
 #slide(title: "軌道-穩定子定理")[
   #set text(size: 20pt)
@@ -1105,9 +1175,6 @@
         on-xz(y:1,{
           rect((-1,-1),(1,1))
         })
-        // line((0,0,0),(2,0,0),stroke: red)
-        // line((0,0,0),(0,2,0),stroke: green)
-        // line((0,0,0),(0,0,2),stroke: blue)
       })
     }),
     cetz.canvas(length: 3em,{
