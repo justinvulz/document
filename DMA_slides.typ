@@ -911,25 +911,35 @@
     $
     $Stab_G (x)$稱為$x$的*穩定子群*，$X^g$稱為$g$的*不動點*。
   ]
-  #pause
-  #v(1.5em)
-  - $X^e = X$
   
 ]
 
 
-#let tri(c1,c2,c3) = diagram({
-  node(p1,$space$,fill:c1,shape: circle)
-  node(p2,$space$,fill:c2,shape: circle)
-  node(p3,$space$,fill:c3,shape: circle)
-  edge(p1,p2,"-")
-  edge(p2,p3,"-")
-  edge(p3,p1,"-")
-})
-#slide[
+#let tri(c1,c2,c3) = {
+  set text(size: 11pt);
+  block[
+    #diagram(
+    {
+      node(p1,$space$,fill:c1,shape: circle)
+      node(p2,$space$,fill:c2,shape: circle)
+      node(p3,$space$,fill:c3,shape: circle)
+      edge(p1,p2,"-")
+      edge(p2,p3,"-")
+      edge(p3,p1,"-")
+    })    
+  ]
+}
+#let (r,b,g) = (red,teal,lime)
+#slide(title:"Example")[
+  #set text(size: 23pt)
+  讓$G = D_3$，$X$是用$3$種顏色為三角形的頂點上色所有可能所成的集合。
+  e.g.
+  $ (#tri(red,teal,lime)),(#tri(red,red,red)),(#tri(red,teal,teal)) in X $  
+  $abs(X) = 3 times 3 times 3 $
+]
+#slide(title: "Example: 軌道")[
   #set text(size: 10pt)
   #let c = (red,teal,lime)
-  #let (r,g,b) = c
   #let arr = range(27).map(i => {
     let a1 = calc.rem(i,3)
     i = calc.quo(i,3)
@@ -986,11 +996,52 @@
     tri(b,b,b),tri(r,g,r),tri(g,r,g),tri(b,g,b),tri(g,b,g),tri(r,b,r),tri(b,r,b),tri(g,b,r),tri(g,r,b)
     
   )
-  
-
 ]
+#slide(title: "Example: Stabilizer")[
+  #place(
+    top+ right,
+    diagram(
+    {
+      node(p1,[*1*])
+      node(p2,[*2*])
+      node(p3,[*3*])
+      edge(p1,p2,"-")
+      edge(p2,p3,"-")
+      edge(p3,p1,"-")
+    })
+  )
+  
+  $Stab_G (#tri(red,red,red)) =D_3$
+     
+  $Stab_G (#tri(g,g,b)) = {e,(1,2)}$
+  
+  $Stab_G (#tri(r,g,b)) = {e}$
 
+  $Stab_G (#tri(b,r,r)) = {e,(2,3)}$
+]
+#slide(title: "Example: Fixed Point")[
+  #place(
+    top+ right,
+    diagram(
+    {
+      node(p1,[*1*])
+      node(p2,[*2*])
+      node(p3,[*3*])
+      edge(p1,p2,"-")
+      edge(p2,p3,"-")
+      edge(p3,p1,"-")
+    })
+  )
+  
+  $g = e$ , $X^g = X$
+     
+  $g = (1,2,3)$ , $X^g = {#tri(r,r,r),#tri(g,g,g),#tri(b,b,b)}$
 
+  $g = (2,3)$ , $X^g =$
+  
+  ${#tri(r,r,r),#tri(g,g,g),#tri(b,b,b),
+  #tri(r,b,b),#tri(g,b,b),#tri(b,r,r),#tri(g,r,r),#tri(r,g,g),#tri(b,g,g)}$
+]
 
 #slide(title: "軌道-穩定子定理")[
   #set text(size: 20pt)
@@ -1047,12 +1098,12 @@
 #slide(title: "Proof")[
   #set text(size: 19pt)
   我們考慮序組$(g,x)$，其中$g x = x$。假設這樣的序組有$N$個。
-  對於每一個$g in G$，我們計算$(g,x)$的數量，這個數量是$abs(X^g)$。所以
+  給定 一個$g in G$，我們計算$(g,x)$的數量，這個數量是$abs(X^g)$。所以
   $
     N = sum_(g in G) abs(X^g)
   $
   #pause
-  另一方面，對於每一個$x in X$，我們計算$(g,x)$的數量，這個數量是$abs(Stab_G (x))$。所以
+  另一方面，給定一個$x in X$，我們計算$(g,x)$的數量，這個數量是$abs(Stab_G (x))$。所以
   $
     N = sum_(x in X) abs(Stab_G (x))
   $
@@ -1079,22 +1130,39 @@
 #slide(title: "Example")[
   #set text(size: 19pt)
   用$4$個顏色對一個正三角形的三個邊進行著色，有幾種不同的著色方法？(兩種著色方式被認為是相同的，如果他們可以通過旋轉、鏡射相互變換)
-  
   #pause
+
+  #text(size: 21pt)[*Method1*:]
+  分別討論有$1,2,3$個顏色時的著色方法數量。
+  $ C^4_1 times 1 + C^4_2 times 2 + C^4_3 times 1  = 20 $
+  e.g.
+
+  #grid(
+    columns: (1fr,1fr,1fr),
+    rows: (auto),
+    align: center,
+    tri(r,r,r),grid.cell({tri(r,r,g);tri(g,g,r)}),tri(r,g,b)
+  )
+
   
+
+]
+#slide(title: "Method2: Burnside's lemma")[
+  #set text(size: 19pt)
   我們讓$G = D_3$是三角型的對稱群，$X$是所有著色的結果($abs(X) = 4^3$)，所以我們要求$X$在$G$下有幾個軌道。根據前的討論，我們知道$abs(G) = 6$，然後我們計算不動點的個數：
+  #grid(
+  columns: (1fr,1fr),  
   $
     abs(X^(rho_0)) = 4^3\
     abs(X^(rho_1)) = 4\
     abs(X^(rho_2)) = 4\
+  $,
+  $
     abs(X^(tau_1)) = 4^2\
     abs(X^(tau_2)) = 4^2\
     abs(X^(tau_3)) = 4^2\
   $
-
-]
-#slide[
-  #set text(size: 21pt)
+  )
   根據*伯恩賽德引理*，我們有
   $
     6r &= 4^3 +4 +4 +4^2 +4^2 + 4^2 = 120\
@@ -1133,11 +1201,11 @@
   #pause
   #set text(size: 21pt)
   #v(3em)
-  - 單位變換 $mg = 4$
-  - $2$個$mg = 1$的旋轉($90 degree, 270 degree$)，e.x. $g = (1,2,3,4)$   
-  - $1$個$mg = 2$的旋轉($180 degree$)，e.x. $g = (1,2)(3,4)$  
-  - $2$個$mg = 3$的鏡射(對角線的鏡射)，e.x. $g = (1)(3)(2,4)$ 
-  - $2$個$mg = 2$的鏡射(中線的鏡射)，e.x. $g = (1,3)(2,4)$  
+  - $1$個 $4$ cycle的單位變換，$e = (1)(2)(3)(4)$
+  - $2$個 $1$ cycle的旋轉($90 degree, 270 degree$)，e.x. $g = (1,2,3,4)$   
+  - $1$個 $2$ cycle的旋轉($180 degree$)，e.x. $g = (1,2)(3,4)$  
+  - $2$個 $3$ cycle的鏡射(對角線的鏡射)，e.x. $g = (1)(3)(2,4)$ 
+  - $2$個 $2$ cycle的鏡射(中線的鏡射)，e.x. $g = (1,3)(2,4)$ 
 ]
 #slide[
   #set text(size: 21pt)
@@ -1202,11 +1270,11 @@
   
   #pause
   #v(3em)
-  - 單位變換 $mg = 4$
-  - $2$個$mg = 1$的旋轉($90 degree, 270 degree$)，e.x. $g = (1,2,3,4)$   
-  - $1$個$mg = 2$的旋轉($180 degree$)，e.x. $g = (1,2)(3,4)$  
-  - $2$個$mg = 3$的鏡射(對角線的鏡射)，e.x. $g = (1)(3)(2,4)$ 
-  - $2$個$mg = 2$的鏡射(中線的鏡射)，e.x. $g = (1,3)(2,4)$ 
+  + 單位變換:$(1)(2)(3)(4)(5)(6)$
+  + 過對面中點轉軸旋轉$90degree,270degree$，如:$(1,2,3,4)(5)(6)$，共 6 個。
+  + 過對面中點轉軸旋轉$180degree$，如:$(1,3)(2,4)(5)(6)$，共 3 個。
+  + 過對邊中點轉軸旋轉$180degree$，如:$(1,5)(3,6)(2,4)$，共 6 個。
+  + 過對頂點轉軸旋轉$120degree,240degree$，如:$(1,5,4)(2,3,6)$，共 8 個
 ]
 #slide[
   #set text(size: 21pt)
