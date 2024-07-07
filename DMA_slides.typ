@@ -606,7 +606,7 @@
 ]
 #slide[
   #set figure(supplement: none)
-  #let tri(a,b,c,script:none) = diagram({
+  #let tri(a,b,c,script:none) = block[#diagram({
     node(p1,[*#a*])
     node(p2,[*#b*])
     node(p3,[*#c*])
@@ -614,7 +614,7 @@
     edge(p2,p3,"-")
     edge(p3,p1,"-")
     script
-  })
+  })]
   #grid(
     columns :(1fr,1fr,1fr),
     rows: (1fr,1fr),
@@ -806,63 +806,25 @@
   $
   像是在上一章節中，我們考慮了對稱群$D_3$對正三角形的作用。
 ]
+#let tri(a,b,c) = block[#diagram({
+  node(p1,[*#a*])
+  node(p2,[*#b*])
+  node(p3,[*#c*])
+  edge(p1,p2,"-")
+  edge(p2,p3,"-")
+  edge(p3,p1,"-")
+})]
+
 #slide(title:"Example")[
   $rho_1 = (1,2,3) in D_3$
-  #grid(
-    columns: (auto,auto,auto,auto),
-    column-gutter: 1em,
-    rows: (auto),
-    align: center+horizon,
-    $rho_1$,
-    diagram(
-    { 
-      node(p1,[*1*])
-      node(p2,[*2*])
-      node(p3,[*3*])
-      edge(p1,p2,"-")
-      edge(p2,p3,"-")
-      edge(p3,p1,"-")
-    }),
-    $=$,
-    diagram(
-    {
-      node(p1,[*2*])
-      node(p2,[*3*])
-      node(p3,[*1*])
-      edge(p1,p2,"-")
-      edge(p2,p3,"-")
-      edge(p3,p1,"-")
-    })
-  )
+  
+  $ rho_1 #tri(1,2,3) = #tri(2,3,1) $
+
   $tau = (1)(2,3) in D_3$
-  #grid(
-    columns: (auto,auto,auto,auto),
-    column-gutter: 1em,
-    rows: (auto),
-    align: center+horizon,
-    $tau$,
-    diagram(
-    { 
-      node(p1,[*1*])
-      node(p2,[*2*])
-      node(p3,[*3*])
-      edge(p1,p2,"-")
-      edge(p2,p3,"-")
-      edge(p3,p1,"-")
-    }),
-    $=$,
-    diagram(
-    {
-      node(p1,[*1*])
-      node(p2,[*3*])
-      node(p3,[*2*])
-      edge(p1,p2,"-")
-      edge(p2,p3,"-")
-      edge(p3,p1,"-")
-    })
-  )
+
+  $ tau #tri(1,2,3) = #tri(1,3,2) $
 ]
-#slide(title:"作用群")[
+#slide(title:"群作用")[
   #set text(size: 19pt)
   #theorem(number:"4.2")[
     讓$X$是一個#gset。如果$g x_1 = g x_2$，那$x_1 = x_2$
@@ -940,16 +902,6 @@
 #slide(title: "Example: 軌道")[
   #set text(size: 10pt)
   #let c = (red,teal,lime)
-  #let arr = range(27).map(i => {
-    let a1 = calc.rem(i,3)
-    i = calc.quo(i,3)
-    let a2 = calc.rem(i,3)
-    i = calc.quo(i,3)
-    let a3 = calc.rem(i,3)
-    tri(
-    c.at(a3),
-    c.at(a2),
-    c.at(a1),)})
   #grid(
     columns: (1fr,)*9,
     column-gutter: 0em,
@@ -1080,9 +1032,34 @@
     &<==> g in {h tilde(g) | tilde(g) in Stab_G (x)}
   $
   #pause
-  所以，$f(g) = y <==> g in {h tilde(g) | tilde(g) in Stab_G (x)}$。因此，每個$y in G_x$ 都 $abs(Stab_G (x))$ 個 $g in G$ 使得 $f(g) = y$。\
-  所以，$abs(G) = abs(G_x) abs(Stab_G (x))$。
+  所以，#pin(1)$f(g) = y <==> g in {h tilde(g) | tilde(g) in Stab_G (x)}$ #pin(2)，並且，對於所有$tilde(g) in Stab_G(x)$，
+  
+  #pinit-highlight(1,2, fill: teal.transparentize(70%))
+
+  $f(h tilde(g)) = h tilde(g)x = h x =y $。
+
+  因此，每個#pin(1)$y in G_x$ 都 $abs(Stab_G (x))$ 個 $g in G$ 使得 $f(g) = y$#pin(2)。所以，$abs(G) = abs(G_x) abs(Stab_G (x))$。
+
+  #only(4)[
+    #pinit-line(1,2,start-dy:0.3em,end-dy:0.3em, stroke: red+2pt)
+  ]
 ]
+
+#slide(title:"Exercise")[
+  #set text(size:22pt)
+  #set enum(numbering: al("1."))
+  + 為什麼${h tilde(g) | tilde(g) in Stab_G (x)}$ 的基數(cardinality)和 $Stab_G (x)$ 的基數相等？
+  
+  + 判斷下列圖形的對稱群的order:
+  #grid(
+    columns: (1fr,1fr),
+    rows: (auto),
+    align: center,
+    image("./pic/tetrahedron.png",height: 210pt),
+    image("./pic/smile_face.jpg",height: 210pt),
+  )
+]
+
 #slide(title: "伯恩賽德引理 (Burnside’s Lemma)")[
   #set text(size: 19pt)
   #lemma([*伯恩賽德引理*],number:"4.7")[
@@ -1148,7 +1125,7 @@
 
 ]
 #slide(title: "Method2: Burnside's lemma")[
-  #set text(size: 19pt)
+  #set text(size: 21pt)
   我們讓$G = D_3$是三角型的對稱群，$X$是所有著色的結果($abs(X) = 4^3$)，所以我們要求$X$在$G$下有幾個軌道。根據前的討論，我們知道$abs(G) = 6$，然後我們計算不動點的個數：
   #grid(
   columns: (1fr,1fr),  
