@@ -172,11 +172,11 @@
   - $C_3 ={e,a,b}$ 的 order 為 $3$。
   - 可逆矩陣的集合與矩陣乘法是一個群，但不是交換群。
 ]
-#slide(title: "MEME")[
-  #align(center)[
-    #image("pic/meme.jpg")
-  ]
-]
+// #slide(title: "MEME")[
+//   #align(center)[
+//     #image("pic/meme.jpg")
+//   ]
+// ]
 #let slide = slide.with(title: "群的基礎性質")
 #slide(new-section: "Properties of Groups")[
   #set text(size: 19pt)
