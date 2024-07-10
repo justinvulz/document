@@ -1214,6 +1214,7 @@
     })
   )
 ]
+
 #slide[
   #let mg = $m_g$
   #set text(size: 21pt)
@@ -1256,4 +1257,47 @@
   $
     r = 1/12 (n^6 + 8n^2 + 3n^4) 
   $
+]
+#slide(title:"Exercise")[
+  #exercise[
+    對於正$n$邊形的對稱群$D_n$，$abs(D_n)$是多少?
+  ]
+]
+#slide(title:"Exercise")[
+  #set text(size: 19pt)
+  #exercise[
+    有$n$個不同顏色的珠子，我們要把這些珠子串成一串$6$個珠子的項鍊，可以通過旋轉變換得到視為相同的項鍊。總共有多少種不同的項鍊？
+    #figure[
+      #diagram(
+        node-stroke: 1pt,
+        {
+        for t in range(6).map(i => i/6*360deg) {
+          node((calc.cos(t),calc.sin(t)),[#v(0.1em)],shape: circle)
+          edge((calc.cos(t),calc.sin(t)),(calc.cos(t+60deg),calc.sin(t+60deg)),
+            bend: 30deg)
+        }
+      })
+    ]
+    #set enum (numbering: al("a)"))
+    + 對稱群的order是多少？
+    + 對稱群的元素有哪些？ 每個元素有幾個循環？
+    + 有多少種不同的著色方式？
+  ]  
+]
+#slide(title:"Exercise")[
+  #exercise[
+    在旋轉的對稱性下，用$n$個顏色對一個正四面體的*面*上色。    
+    #set enum (numbering: al("a)"))
+    + 對稱群的order是多少？
+    + 對稱群的元素有哪些？ 每個元素有幾個循環？
+    + 有多少種不同的著色方式？
+
+  ]
+  
+]
+#slide(title:"Exercise")[
+  #exercise[
+    有$3$個顏色，幫一個正六面體上色，*每個顏色上兩個面*，可以通過旋轉變換得到視為相同的著色方式。總共有多少種不同的著色方式？
+  ]
+  
 ]
