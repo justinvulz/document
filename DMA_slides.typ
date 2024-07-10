@@ -197,10 +197,10 @@
         $=> &#pin(1)a^(-1)*a#pin(2)*b = #pin(3)a^(-1)*a#pin(4)*c \ $
       ]
       #uncv("5-")[
-        $=> &e*b = e*a\ $
+        $=> &e*b = e*c\ $
       ]
       #uncv("2-")[
-        $=> &b = a$
+        $=> &b = c$
       ] 
     $
   ]
@@ -266,17 +266,17 @@
   ]
   #only("1")[我們有時候會省略運算符號，寫成$a b$代表$a*b$。]
   #only("2-")[
-    #proof[
-      我們直接相乘
-      $
-          (a b)b^(-1) a^(-1) &= a (b b^(-1)) a^(-1) \
-                            &= a e a^(-1)\
-                          &= a a^(-1)\
-                          &= e
-      $
-      根據反元素的定義，$(a b)^(-1) = b^(-1) a^(-1)$
-    ]
-    我們只證明了$(a b)^(-1)b^(-1) a^(-1) =e$，但是$b^(-1) a^(-1)(a b)^(-1) =e$也是成立的。
+  #proof[
+    我們直接相乘
+    $
+        (a b)b^(-1) a^(-1) &= a (b b^(-1)) a^(-1) \
+                          &= a e a^(-1)\
+                        &= a a^(-1)\
+                        &= e
+    $
+    根據反元素的定義，$(a b)^(-1) = b^(-1) a^(-1)$
+  ]
+  我們只證明了$(a b)b^(-1) a^(-1) =e$，但是$b^(-1) a^(-1)(a b) =e$也是成立的。
   ]
 ]
 #let slide = slide.with(title: none)
@@ -296,10 +296,10 @@
   #figure(
     $
       1 -> 3\
-      2 -> 4\
+      2 -> 1\
       3 -> 5\
       4 -> 2\
-      5 -> 1
+      5 -> 4
     $,
     caption: [$sigma$],
   ) <fig1>
@@ -750,13 +750,48 @@
 #slide(title: "如何計算對稱群")[
 
   + 先找到圖形的不動點
-  + 畫一條通過不動點的直線。
+  + 畫一條通過不動點的直線(有向)。
   + 假設有$m$個對稱稱使得這條線不動，而條線在對稱性下會被打到$n$個不同的位子。
   + 那麼這個對稱群的order就是$n times m$。
 
   下一節會證明這個方法是正確的。
 ]
-#slide(title: "如何計算對稱群")[
+
+#slide(title:"如何計算對稱群")[
+  #grid(
+    columns: (1fr,1fr),
+    rows: (auto),
+    align: center,
+    image("./pic/gimage.jpg",height: 250pt),
+    cetz.canvas(length: 4em,{
+        import cetz.draw:*;
+        ortho(x:20deg,y:50deg,z:0deg,{
+          
+          on-xy(z:-1,{
+            rect((-1,-1),(1,1))
+          })
+          on-xy(z:1,{
+            rect((-1,-1),(1,1), fill: silver)
+          })
+          on-yz(x:-1,{
+            rect((-1,-1),(1,1))
+          })
+          on-yz(x:1,{
+            rect((-1,-1),(1,1), fill : rgb("e8e8f8").transparentize(20%))
+          })
+          on-xz(y:-1,{
+            rect((-1,-1),(1,1), stroke: (dash: "dashed"))
+          })
+          on-xz(y:1,{
+            rect((-1,-1),(1,1))
+          })
+        })
+      })
+  )
+
+]
+
+#slide(title: "Exercise")[
   + 判斷下列圖形的對稱群的order:
   #grid(
     columns: (1fr,1fr),
@@ -1260,8 +1295,9 @@
 ]
 #slide(title:"Exercise")[
   #exercise[
-    對於正$n$邊形的對稱群$D_n$，$abs(D_n)$是多少?
+    對於正$n$邊形的對稱群$D_n$，$abs(D_n)$是多少? 
   ]
+  #text(size:19pt)[5pt]
 ]
 #slide(title:"Exercise")[
   #set text(size: 19pt)
@@ -1279,25 +1315,25 @@
       })
     ]
     #set enum (numbering: al("a)"))
-    + 對稱群的order是多少？
-    + 對稱群的元素有哪些？ 每個元素有幾個循環？
-    + 有多少種不同的著色方式？
+    + 對稱群的order是多少？ 
+    + 對稱群的元素有哪些？ 每個元素有幾個循環？ 
+    + 有多少種不同的著色方式？ 
   ]  
+  #text(size:19pt)[1pt ;2pt; 2pt]
 ]
 #slide(title:"Exercise")[
   #exercise[
     在旋轉的對稱性下，用$n$個顏色對一個正四面體的*面*上色。    
     #set enum (numbering: al("a)"))
     + 對稱群的order是多少？
-    + 對稱群的元素有哪些？ 每個元素有幾個循環？
-    + 有多少種不同的著色方式？
-
+    + 對稱群的元素有哪些？ 每個元素有幾個循環？ 
+    + 有多少種不同的著色方式？ 
   ]
-  
+  #text(size:19pt)[1pt; 2pt; 2pt]
 ]
 #slide(title:"Exercise")[
   #exercise[
-    有$3$個顏色，幫一個正六面體上色，*每個顏色上兩個面*，可以通過旋轉變換得到視為相同的著色方式。總共有多少種不同的著色方式？
+    有$3$個顏色，幫一個正六面體上色，*每個顏色上兩個面*，可以通過旋轉變換得到視為相同的著色方式。總共有多少種不同的著色方式？ 
   ]
-  
+  #text(size:19pt)[5pt]
 ]
