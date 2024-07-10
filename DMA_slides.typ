@@ -757,33 +757,14 @@
   下一節會證明這個方法是正確的。
 ]
 #slide(title: "如何計算對稱群")[
-  正$n$邊形的對稱群的order是#only("1")[多少?]。\
-  立方體的有#only("1")[多少]不同的旋轉。
-  #set align(center)
-  #cetz.canvas(length: 90pt,{
-      import cetz.draw:*
-      ortho(x:20deg,y:45deg,z:0deg,{
-        
-        on-xy(z:-1,{
-          rect((-1,-1),(1,1),fill: rgb("e8e8f8"))
-        })
-        on-xy(z:1,{
-          rect((-1,-1),(1,1),fill: rgb(silver))
-        })
-        on-yz(x:-1,{
-          rect((-1,-1),(1,1))
-        })
-        on-yz(x:1,{
-          rect((-1,-1),(1,1))
-        })
-        on-xz(y:-1,{
-          rect((-1,-1),(1,1))
-        })
-        on-xz(y:1,{
-          rect((-1,-1),(1,1))
-        })
-      })
-    })
+  + 判斷下列圖形的對稱群的order:
+  #grid(
+    columns: (1fr,1fr),
+    rows: (auto),
+    align: center,
+    image("./pic/tetrahedron.png",height: 210pt),
+    image("./pic/smile_face.jpg",height: 210pt),
+  )
 ]
 #new-section-slide("群作用",subtitle:"Group Action")
 #let gset = $G negspace textb("-set")$
@@ -1048,16 +1029,9 @@
 #slide(title:"Exercise")[
   #set text(size:22pt)
   #set enum(numbering: al("1."))
-  + 為什麼${h tilde(g) | tilde(g) in Stab_G (x)}$ 的基數(cardinality)和 $Stab_G (x)$ 的基數相等？
+  - 為什麼${h tilde(g) | tilde(g) in Stab_G (x)}$ 的基數(cardinality)和 $Stab_G (x)$ 的基數相等？
   
-  + 判斷下列圖形的對稱群的order:
-  #grid(
-    columns: (1fr,1fr),
-    rows: (auto),
-    align: center,
-    image("./pic/tetrahedron.png",height: 210pt),
-    image("./pic/smile_face.jpg",height: 210pt),
-  )
+  
 ]
 
 #slide(title: "伯恩賽德引理 (Burnside’s Lemma)")[
