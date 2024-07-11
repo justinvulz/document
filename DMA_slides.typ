@@ -756,7 +756,34 @@
 
   下一節會證明這個方法是正確的。
 ]
-
+#slide(title: "Exercise")[
+  #let tri = cetz.canvas(
+    length: 10em,{
+    import cetz.draw:*;
+    line((0,0),(1,0),(0.5,0.866),close: true)
+  })
+  #grid(
+    columns: (1fr,1fr),
+    rows: (auto),
+    align: center,
+    tri,
+    tri,
+  )
+]
+#slide(title: "Exercise")[
+  #let squrae = cetz.canvas(
+    length: 10em,{
+    import cetz.draw:*;
+    rect((0,0),(1,1))
+  })
+  #grid(
+    columns: (1fr,1fr),
+    rows: (auto),
+    align: center,
+    squrae,
+    squrae,
+  )
+]
 #slide(title:"如何計算對稱群")[
   #grid(
     columns: (1fr,1fr),
