@@ -170,6 +170,7 @@
   - 整數集合 $ZZ$ 與加法運算 $+$ 是一個交換群。
   - $C_3 ={e,a,b}$ 的 order 為 $3$。
   - 可逆矩陣的集合與矩陣乘法是一個群，但不是交換群。
+
 ]
 
 #let slide = slide.with(title: "群的基礎性質")
@@ -221,6 +222,11 @@
 
   #uncv("4-")[
     讓$A,B,C$是$n times n$的*可逆矩陣*，如果$B A = C A$，那麼$B=C$
+  ]
+
+  
+  #uncv("5-")[
+    通過消去率我們可以證明反元素是唯一的。
   ]
  
 ]
@@ -570,7 +576,7 @@
 #slide(title: "置換群")[
   #set text(size: 19pt)
   #definition(number:"2.2")[
-    一個集合$A$的所有置換構成一個_群_，稱為$A$的*置換群*，記為$S_A$。
+    一個集合(有限)$A$的所有置換構成一個_群_，稱為$A$的*置換群*，記為$S_(A)$。
   ]
   #pause
   我們驗證$S_A$確實是一個群。 (單位元素、結合律、反元素)
@@ -595,7 +601,6 @@
 #let (p1,p2,p3) = ((0,0),(1,0),(0.5,-0.866))
 
 #slide(title:"對稱群")[
-  一個物體的*對稱性*是指物體在某些操作下保持物體原有的性質。\
 
 
   我們接下來考慮一個正三角形，他有那些對稱性？
@@ -826,17 +831,17 @@
   )
 ]
 #new-section-slide("群作用",subtitle:"Group Action")
-#let gset = $G negspace textb("-set")$
+#let gset = $G negspace text("-set")$
 #slide(title: "群作用")[
   #set text(size: 19pt)
 
   #definition(number:"4.1")[
-    一個群$angle.l G,* angle.r$對一個集合$A$的*作用*是一個映射 $phi : G times A -> A$，滿足以下條件：
+    一個*群*$angle.l G,* angle.r$對一個集合$A$的*作用*是一個映射 $phi : G times A -> A$，滿足以下條件：
     #set enum(numbering: al("1."))
     + 對於所有 $a in A quad phi(e,a) = a$
     + 對於所有 $a in A$ 和 $g,h in G$，$phi(g*h,a) = phi(g,phi(h,a))$
 
-    在這個情況下，我們稱$A$是一個#gset。
+    在這個情況下，我們稱$A$是一個$G negspace textb("-set")$。
   ]
   為了簡化，我們有時候會省略運算符號，寫成$g a$代表$phi(g,a)$。
   所以上述的條件可以寫成
@@ -901,8 +906,8 @@
   ]
 ]
 #let Stab = math.op("Stab")
-#slide(title: "不動點、穩定子群")[
-  *Fixed point, Stabilizers subgroup *
+#slide(title: "不動點、穩定子")[
+  *Fixed point, Stabilizers *
   #set text(size: 19pt)
 
   #definition(number: "4.5")[
@@ -911,7 +916,7 @@
       Stab_G (x) = {g in G | g x = x} \
       X^g = {x in X | g x = x}
     $
-    $Stab_G (x)$稱為$x$的*穩定子群*，$X^g$稱為$g$的*不動點*。
+    $Stab_G (x)$稱為$x$的*穩定子*，$X^g$稱為$g$的*不動點*。
   ]
   
 ]
@@ -1040,9 +1045,7 @@
   #theorem([軌道-穩定子定理 (Orbit-Stabilizer Theorem)],number:"4.6")[
     讓$G$是一個有限群，讓 $X$ 是一個 #gset，$x in X$，那麼 $abs(G) = abs(G_x) abs(Stab_G (x))$。
   ] <orbit-stabilizer>
-  #figure(
-      image("pic/obstab.jpg",height: 250pt)
-  )
+
 ]
 #slide(title:"Proof")[
   #set text(size: 19pt)
