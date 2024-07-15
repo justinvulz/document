@@ -884,7 +884,7 @@
 #slide(title: "軌道 Orbits")[
   #set text(size: 19.5pt)
   #theorem(number:"4.3")[
-    讓$X$是一個#gset，我們定義一個在$X$上的關係$tilde.op$，對於所有的$x,y in X$，$x tilde.op y$當且僅當存在$g in G$，使得$g x = y$。這個關係是一個等價關係。
+    讓$X$是一個#gset，我們定義一個在$X$上的關係$tilde.op$，對於所有的$x,y in X$，$x tilde.op y$若且為若存在$g in G$，使得$g x = y$。這個關係是一個等價關係。
   ] <relation>
   #pause
   #proof[
