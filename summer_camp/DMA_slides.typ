@@ -154,8 +154,7 @@
     t($e$,$a$,$b$,"*"),
     t($0$,$1$,$2$,"+")
   )
-  $3$的模數群 $ZZ_3 = {0,1,2}$ 與加法運算 $+$ 是一個群。 
-  
+  - $3$的同餘加法群 $ZZ_3 = {0,1,2}$ 與加法運算 $+$ 是一個群。 
 ]
 #slide[
   #set text(size: 19pt)
@@ -171,12 +170,9 @@
   - 整數集合 $ZZ$ 與加法運算 $+$ 是一個交換群。
   - $C_3 ={e,a,b}$ 的 order 為 $3$。
   - 可逆矩陣的集合與矩陣乘法是一個群，但不是交換群。
+
 ]
-#slide(title: "MEME")[
-  #align(center)[
-    #image("pic/meme.jpg")
-  ]
-]
+
 #let slide = slide.with(title: "群的基礎性質")
 #slide(new-section: "Properties of Groups")[
   #set text(size: 19pt)
@@ -197,10 +193,10 @@
         $=> &#pin(1)a^(-1)*a#pin(2)*b = #pin(3)a^(-1)*a#pin(4)*c \ $
       ]
       #uncv("5-")[
-        $=> &e*b = e*a\ $
+        $=> &e*b = e*c\ $
       ]
       #uncv("2-")[
-        $=> &b = a$
+        $=> &b = c$
       ] 
     $
   ]
@@ -226,6 +222,11 @@
 
   #uncv("4-")[
     讓$A,B,C$是$n times n$的*可逆矩陣*，如果$B A = C A$，那麼$B=C$
+  ]
+
+  
+  #uncv("5-")[
+    通過消去率我們可以證明反元素是唯一的。
   ]
  
 ]
@@ -266,17 +267,17 @@
   ]
   #only("1")[我們有時候會省略運算符號，寫成$a b$代表$a*b$。]
   #only("2-")[
-    #proof[
-      我們直接相乘
-      $
-          (a b)b^(-1) a^(-1) &= a (b b^(-1)) a^(-1) \
-                            &= a e a^(-1)\
-                          &= a a^(-1)\
-                          &= e
-      $
-      根據反元素的定義，$(a b)^(-1) = b^(-1) a^(-1)$
-    ]
-    我們只證明了$(a b)^(-1)b^(-1) a^(-1) =e$，但是$b^(-1) a^(-1)(a b)^(-1) =e$也是成立的。
+  #proof[
+    我們直接相乘
+    $
+        (a b)b^(-1) a^(-1) &= a (b b^(-1)) a^(-1) \
+                          &= a e a^(-1)\
+                        &= a a^(-1)\
+                        &= e
+    $
+    根據反元素的定義，$(a b)^(-1) = b^(-1) a^(-1)$
+  ]
+  我們只證明了$(a b)b^(-1) a^(-1) =e$，但是$b^(-1) a^(-1)(a b) =e$也是成立的。
   ]
 ]
 #let slide = slide.with(title: none)
@@ -296,10 +297,10 @@
   #figure(
     $
       1 -> 3\
-      2 -> 4\
+      2 -> 1\
       3 -> 5\
       4 -> 2\
-      5 -> 1
+      5 -> 4
     $,
     caption: [$sigma$],
   ) <fig1>
@@ -575,7 +576,7 @@
 #slide(title: "置換群")[
   #set text(size: 19pt)
   #definition(number:"2.2")[
-    一個集合$A$的所有置換構成一個_群_，稱為$A$的*置換群*，記為$S_A$。
+    一個集合(有限)$A$的所有置換構成一個_群_，稱為$A$的*置換群*，記為$S_(A)$。
   ]
   #pause
   我們驗證$S_A$確實是一個群。 (單位元素、結合律、反元素)
@@ -600,7 +601,8 @@
 #let (p1,p2,p3) = ((0,0),(1,0),(0.5,-0.866))
 
 #slide(title:"對稱群")[
-  #set figure(supplement: none)
+
+
   我們接下來考慮一個正三角形，他有那些對稱性？
 
 ]
@@ -751,52 +753,95 @@
 
   + 先找到圖形的不動點
   + 畫一條通過不動點的直線。
-  + 假設有$m$個對稱稱使得這條線不動，而條線在對稱性下會被打到$n$個不同的位子。
+  + 假設有$m$個對稱稱使得這條*線上的點*不動，而條*線上的點*在對稱性下會被打到$n$個不同的位子。
   + 那麼這個對稱群的order就是$n times m$。
 
   下一節會證明這個方法是正確的。
 ]
-#slide(title: "如何計算對稱群")[
-  正$n$邊形的對稱群的order是#only("1")[多少?]。\
-  立方體的有#only("1")[多少]不同的旋轉。
-  #set align(center)
-  #cetz.canvas(length: 90pt,{
-      import cetz.draw:*
-      ortho(x:20deg,y:45deg,z:0deg,{
-        
-        on-xy(z:-1,{
-          rect((-1,-1),(1,1),fill: rgb("e8e8f8"))
-        })
-        on-xy(z:1,{
-          rect((-1,-1),(1,1),fill: rgb(silver))
-        })
-        on-yz(x:-1,{
-          rect((-1,-1),(1,1))
-        })
-        on-yz(x:1,{
-          rect((-1,-1),(1,1))
-        })
-        on-xz(y:-1,{
-          rect((-1,-1),(1,1))
-        })
-        on-xz(y:1,{
-          rect((-1,-1),(1,1))
+#slide(title: "Exercise")[
+  #let tri = cetz.canvas(
+    length: 10em,{
+    import cetz.draw:*;
+    line((0,0),(1,0),(0.5,0.866),close: true)
+  })
+  #grid(
+    columns: (1fr,1fr),
+    rows: (auto),
+    align: center,
+    tri,
+    tri,
+  )
+]
+#slide(title: "Exercise")[
+  #let squrae = cetz.canvas(
+    length: 10em,{
+    import cetz.draw:*;
+    rect((0,0),(1,1))
+  })
+  #grid(
+    columns: (1fr,1fr),
+    rows: (auto),
+    align: center,
+    squrae,
+    squrae,
+  )
+]
+#slide(title:"如何計算對稱群")[
+  #grid(
+    columns: (1fr,1fr),
+    rows: (auto),
+    align: center,
+    image("./pic/gimage.jpg",height: 250pt),
+    cetz.canvas(length: 4em,{
+        import cetz.draw:*;
+        ortho(x:20deg,y:50deg,z:0deg,{
+          
+          on-xy(z:-1,{
+            rect((-1,-1),(1,1))
+          })
+          on-xy(z:1,{
+            rect((-1,-1),(1,1), fill: silver)
+          })
+          on-yz(x:-1,{
+            rect((-1,-1),(1,1))
+          })
+          on-yz(x:1,{
+            rect((-1,-1),(1,1), fill : rgb("e8e8f8").transparentize(20%))
+          })
+          on-xz(y:-1,{
+            rect((-1,-1),(1,1), stroke: (dash: "dashed"))
+          })
+          on-xz(y:1,{
+            rect((-1,-1),(1,1))
+          })
         })
       })
-    })
+  )
+
+]
+
+#slide(title: "Exercise")[
+  + 判斷下列圖形的對稱群的order:
+  #grid(
+    columns: (1fr,1fr),
+    rows: (auto),
+    align: center,
+    image("./pic/tetrahedron.png",height: 210pt),
+    image("./pic/smile_face.jpg",height: 210pt),
+  )
 ]
 #new-section-slide("群作用",subtitle:"Group Action")
-#let gset = $G negspace textb("-set")$
+#let gset = $G negspace text("-set")$
 #slide(title: "群作用")[
   #set text(size: 19pt)
 
   #definition(number:"4.1")[
-    一個群$angle.l G,* angle.r$對一個集合$A$的*作用*是一個映射 $phi : G times A -> A$，滿足以下條件：
+    一個*群*$angle.l G,* angle.r$對一個集合$A$的*作用*是一個映射 $phi : G times A -> A$，滿足以下條件：
     #set enum(numbering: al("1."))
     + 對於所有 $a in A quad phi(e,a) = a$
     + 對於所有 $a in A$ 和 $g,h in G$，$phi(g*h,a) = phi(g,phi(h,a))$
 
-    在這個情況下，我們稱$A$是一個#gset。
+    在這個情況下，我們稱$A$是一個$G negspace textb("-set")$。
   ]
   為了簡化，我們有時候會省略運算符號，寫成$g a$代表$phi(g,a)$。
   所以上述的條件可以寫成
@@ -839,7 +884,7 @@
 #slide(title: "軌道 Orbits")[
   #set text(size: 19.5pt)
   #theorem(number:"4.3")[
-    讓$X$是一個#gset，我們定義一個在$X$上的關係$tilde.op$，對於所有的$x,y in X$，$x tilde.op y$當且僅當存在$g in G$，使得$g x = y$。這個關係是一個等價關係。
+    讓$X$是一個#gset，我們定義一個在$X$上的關係$tilde.op$，對於所有的$x,y in X$，$x tilde.op y$若且為若存在$g in G$，使得$g x = y$。這個關係是一個等價關係。
   ] <relation>
   #pause
   #proof[
@@ -861,8 +906,8 @@
   ]
 ]
 #let Stab = math.op("Stab")
-#slide(title: "不動點、穩定子群")[
-  *Fixed point, Stabilizers subgroup *
+#slide(title: "不動點、穩定子")[
+  *Fixed point, Stabilizers *
   #set text(size: 19pt)
 
   #definition(number: "4.5")[
@@ -871,7 +916,7 @@
       Stab_G (x) = {g in G | g x = x} \
       X^g = {x in X | g x = x}
     $
-    $Stab_G (x)$稱為$x$的*穩定子群*，$X^g$稱為$g$的*不動點*。
+    $Stab_G (x)$稱為$x$的*穩定子*，$X^g$稱為$g$的*不動點*。
   ]
   
 ]
@@ -1000,9 +1045,7 @@
   #theorem([軌道-穩定子定理 (Orbit-Stabilizer Theorem)],number:"4.6")[
     讓$G$是一個有限群，讓 $X$ 是一個 #gset，$x in X$，那麼 $abs(G) = abs(G_x) abs(Stab_G (x))$。
   ] <orbit-stabilizer>
-  #figure(
-      image("pic/obstab.jpg",height: 250pt)
-  )
+
 ]
 #slide(title:"Proof")[
   #set text(size: 19pt)
@@ -1048,16 +1091,9 @@
 #slide(title:"Exercise")[
   #set text(size:22pt)
   #set enum(numbering: al("1."))
-  + 為什麼${h tilde(g) | tilde(g) in Stab_G (x)}$ 的基數(cardinality)和 $Stab_G (x)$ 的基數相等？
+  - 為什麼${h tilde(g) | tilde(g) in Stab_G (x)}$ 的基數(cardinality)和 $Stab_G (x)$ 的基數相等？
   
-  + 判斷下列圖形的對稱群的order:
-  #grid(
-    columns: (1fr,1fr),
-    rows: (auto),
-    align: center,
-    image("./pic/tetrahedron.png",height: 210pt),
-    image("./pic/smile_face.jpg",height: 210pt),
-  )
+  
 ]
 
 #slide(title: "伯恩賽德引理 (Burnside’s Lemma)")[
@@ -1240,6 +1276,7 @@
     })
   )
 ]
+
 #slide[
   #let mg = $m_g$
   #set text(size: 21pt)
@@ -1282,4 +1319,48 @@
   $
     r = 1/12 (n^6 + 8n^2 + 3n^4) 
   $
+]
+#slide(title:"Exercise")[
+  #exercise[
+    對於正$n$邊形的對稱群$D_n$，$abs(D_n)$是多少? 
+  ]
+  #text(size:19pt)[5pt]
+]
+#slide(title:"Exercise")[
+  #set text(size: 19pt)
+  #exercise[
+    有$n$個不同顏色的珠子，我們要把這些珠子串成一串$6$個珠子的項鍊，可以通過旋轉變換得到視為相同的項鍊。總共有多少種不同的項鍊？
+    #figure[
+      #diagram(
+        node-stroke: 1pt,
+        {
+        for t in range(6).map(i => i/6*360deg) {
+          node((calc.cos(t),calc.sin(t)),[#v(0.1em)],shape: circle)
+          edge((calc.cos(t),calc.sin(t)),(calc.cos(t+60deg),calc.sin(t+60deg)),
+            bend: 30deg)
+        }
+      })
+    ]
+    #set enum (numbering: al("a)"))
+    + 對稱群的order是多少？ 
+    + 對稱群的元素有哪些？ 每個元素有幾個循環？ 
+    + 有多少種不同的著色方式？ 
+  ]  
+  #text(size:19pt)[1pt ;2pt; 2pt]
+]
+#slide(title:"Exercise")[
+  #exercise[
+    在旋轉的對稱性下，用$n$個顏色對一個正四面體的*面*上色。    
+    #set enum (numbering: al("a)"))
+    + 對稱群的order是多少？
+    + 對稱群的元素有哪些？ 每個元素有幾個循環？ 
+    + 有多少種不同的著色方式？ 
+  ]
+  #text(size:19pt)[1pt; 2pt; 2pt]
+]
+#slide(title:"Exercise")[
+  #exercise[
+    有$3$個顏色，幫一個正六面體上色，*每個顏色上兩個面*，可以通過旋轉變換得到視為相同的著色方式。總共有多少種不同的著色方式？ 
+  ]
+  #text(size:19pt)[5pt]
 ]
