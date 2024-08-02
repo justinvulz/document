@@ -1,4 +1,4 @@
-#import "./typst_packages/lecture.typ": *
+#import "../typst_packages/lecture.typ": *
 #import "@preview/cetz:0.2.2"
 #import "@preview/fletcher:0.4.5" as fletcher: diagram,node,edge
 #import fletcher.shapes:circle
@@ -718,7 +718,7 @@ $
 #example[
   在旋轉的對稱性下，用$n$個顏色對一個正四面體的*邊*上色，總共有多少種不同的著色方式？
   #figure[
-    #image("/pic/image.png",width: 11em)
+    #image("../pic/summer_camp/image.png",width: 11em)
   ]
 
   我們讓$G$是正四面體的對稱群，我們通過軌道-穩定子定理，我們可以得到$abs(G) =12$
